@@ -8,14 +8,18 @@ export default class Review extends React.Component {
             text : "",
             image : null,
             stars: 0,
+            signedIn: false,
             posted: false,
         }
     }
+    handleClick(){
+        this.signedIn=true;
+    }
     render(){
-        if (this.state.posted === false){
+        if (this.signedIn === true && this.state.posted === false){
             return (
                 <div>
-                    <button class = "sqaure">
+                    <button class = "square">
                         <button>Add image</button>
                         <br/><br/><br/>
                         <button>Add description</button>
