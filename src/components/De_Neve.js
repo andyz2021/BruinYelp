@@ -1,7 +1,12 @@
 import * as React from "react";
+import Review from './Review.js';
 
 export default function De_Neve() {
     return(
-        <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>De Neve</h2>
-    )
+        <div>
+            <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>De Neve</h2>
+            <Review />
+        </div>
+        
+    ) 
 }
