@@ -1,3 +1,4 @@
+import { touchRippleClasses } from "@mui/material";
 import * as React from "react";
 //import Button from 'react-native'
 
@@ -13,14 +14,19 @@ export default class Review extends React.Component {
         }
     }
     handleClick(){
-        this.signedIn=true;
+        if(this.state.signedIn===false){
+            this.setState({
+                signedIn : true //need to implement login
+            })
+            return;
+        }
     }
     render(){
-        if (this.signedIn === true && this.state.posted === false){
+        if (this.state.signedIn === true && this.state.posted === false){
             return (
                 <div>
                     <button class = "square">
-                        <button>Add image</button>
+                        <button class = "square">Add image</button>
                         <br/><br/><br/>
                         <button>Add description</button>
                         <br/><br/><br/>
@@ -28,6 +34,12 @@ export default class Review extends React.Component {
                     </button>
                 </div>
                 
+            )
+        }
+
+        if(this.state.signedIn === false && this.state.posted === false){
+            return (
+                <button className="button1" onClick={()=>this.handleClick()}>Write a Review!</button>
             )
         }
 
