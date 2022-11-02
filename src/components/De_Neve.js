@@ -5,7 +5,7 @@ export default function De_Neve() {
     return(
         <div>
             <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>De Neve</h2>
-            <Review />
+            <button className="button1">Write a Review!</button>
         </div>
         
     ) 
