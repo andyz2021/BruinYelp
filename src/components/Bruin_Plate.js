@@ -1,7 +1,13 @@
 import * as React from "react";
+import Review from './Review.js';
 
 export default function Bruin_Plate() {
+
     return(
-        <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>Bruin Plate</h2>
+        <div>
+            <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>Bruin Plate</h2>
+            <Review />
+        </div>
+        
     )
 }
