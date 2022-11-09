@@ -5,7 +5,7 @@ export default function De_Neve() {
     return(
         <div>
             <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>De Neve</h2>
-            <Review />
+            <Review hall="De_Neve"/>
         </div>
         
     ) 
