@@ -1,5 +1,6 @@
 import { touchRippleClasses } from "@mui/material";
 import TextField from '@mui/material/TextField';
+import "../Review.css"
 
 import * as React from "react";
 //import Button from 'react-native'
@@ -73,13 +74,14 @@ export default function Review(prop) {
                     </button>
                     <br/>
                     <button onClick={()=>writeDb()}>Submit</button> */}
-                    
+
+                    <div className="labels">
                     <form>
-                        Description: <input type="text" onChange={handleChange('text')}/>
+                        Description <input type="text" onChange={handleChange('text')} placeholder="We'd love to know your thoughts!"/>
                         <br/>
-                        Image: <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChange('image')}/>
+                        Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChange('image')}/>
                         <br/>
-                        Star Rating: <select id="selectStar" onChange={handleChange('stars')}>
+                        Star Rating <select id="selectStar" onChange={handleChange('stars')}>
                             <option value='1'>1</option>
                             <option value='2'>2</option>
                             <option value='3'>3</option>
@@ -88,8 +90,8 @@ export default function Review(prop) {
                         </select>
                         <br/>
                     </form>
-                    <button onClick={()=>writeDb()}>Submit</button>
-                    
+                    <button className="button0" onClick={()=>writeDb()}>Submit</button>
+                    </div>
                 </div>)}
 
 
