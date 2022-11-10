@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url("https://img.freepik.com/free-vector/winter-blue-pink-gradient-background-vector_53876-117276.jpg?w=1480&t=st=1668072311~exp=1668072911~hmac=9c79d645d31a2493c69341afe88826335968bdb3a9732a75c94c31939d248d37");
+  /*background-position: bottom;
+  background: linear-gradient(rgba(14, 18, 238, 0), rgba(1, 1, 1, 1));*/
 }
 
 code {

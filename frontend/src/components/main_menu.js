@@ -1,11 +1,8 @@
 import * as React from "react";
+import "../Menu.css"
 
 export default function Main_Menu() {
     return(
-        
-        <div>
-            <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>Menu of all the food(we'll put it in later)</h2>
-        </div>
-       
+        <h2 className = "menubar" style = {{color: 'black', display: "flex", justifyContent: "center"}}>Today's menu:</h2>
     )
 }
