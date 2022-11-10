@@ -1,4 +1,3 @@
-
 /* Write a Review button */
 .button1 {
     display: block;
@@ -7,65 +6,83 @@
     width: 85%;  
     height: 50px;
     border-radius: 10px;
-    border: solid 2px white;
-    background-color: aliceblue;
-    color: rgb(98, 150, 192);
+    border: none;
+    background-color: white;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
+    opacity: 0.8;
+    color: rgb(0, 0, 0);
     font-weight: bold;
     font-size: 17px;
   }
   
   .button1:hover {
-    background-color: rgb(189, 212, 231);
-    color: white;
+    background-image: linear-gradient(to left, rgba(94, 129, 206, 0.548), white);
+    border: 2px solid white;
+    color: rgb(54, 112, 179);
   }
   
 /* inside the form */
 .labels {
-    padding: 30px;
-    text-align: center;
+    display: inline;
+    padding: 30px 50px 30px 50px;
+    text-align: left;
     line-height: 2;
     font-family: Arial;
     font-weight: bold;
     font-size: 20px;
-    color: rgb(85, 85, 85);/*rgb(103, 134, 165); */
-    background-color: aliceblue;
-    border-radius: 20px;
-    width: 40%;
+    color: rgba(0, 0, 0, 0.616);
+    width: 35%;
     float: right;
-    margin: 20px;
+    margin: 20px 100px 20px 0px;
+    height: 90%;
+   /* opacity gradient border */
+    border-top: 3px solid #0f203871;
+    border-bottom: 3px solid #7791b317;
+    background-image: -webkit-linear-gradient(#0f203871, #0000000c);
+    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(##0f203871, #0000000c);
+    background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
+    background-size: 3px 100%;
+    background-position: 0 0, 100% 0;
+    background-repeat: no-repeat;
+    border-radius: 5px 5px 5px 5px;
   }
   
+  /* textbox */
   input[type="text"]{
     text-align: left;
     display: block;
-    margin: 0 auto;
+    margin: 0;
     border-radius: 10px;
-    height: 100px; /* fix! */
-    width: 80%;
+    height: 100px; 
+    width: 92%;
     padding: 0px 20px;
-    /*border: solid 2px rgb(203, 217, 235); */
     border: none;
     resize: none;
     background-color: rgb(255, 255, 255);
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
   }
   
   /* image */
   input[type="file"]{
     display: block;
-    margin: 0 auto; /* FIX CENTERED */
+    margin: 0;
   }
     
   /* star rating */
   select {
     display: block;
-    margin: 0 auto;
+    margin: 0;
     padding: 10px 30px;
     font-size: 14px;
-    color: rgb(118, 118, 119);
+    color: rgba(0, 0, 0, 0.527);
     background-color: rgb(255, 255, 255);
     border: none;
     font-weight: bold;
     border-radius: 10px;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
   }
 
   /* submit */
@@ -76,20 +93,17 @@
     height: 45px;
     border-radius: 10px;
     border: none;
-    background-color: aliceblue;
-    color: rgb(98, 150, 192);
+    background-color: rgb(255, 255, 255);
+    color: rgba(0, 0, 0, 0.699);
     font-weight: bold;
     font-size: 17px;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
   }
 
   .button0:hover {
-    background-color: rgb(189, 212, 231);
-    color: white;
+    background-image: linear-gradient(to left, rgba(94, 129, 206, 0.548), white);
+    border: 2px solid rgb(255, 255, 255);
+    color: rgb(54, 112, 179);
   }
 
-  img {
-    display: inline;
-    margin: 20px 20px 0px 20px;
-    border-radius: 20px;
-    width: 40%;
-  }

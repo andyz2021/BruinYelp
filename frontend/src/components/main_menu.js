@@ -1,9 +1,10 @@
 import * as React from "react";
+import "../Menu.css"
 
 export default function Main_Menu() {
     return(
         <React.Fragment>
-            <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>Menus</h2>
+            <h2 className = "menubar" style = {{color: 'black', display: "flex", justifyContent: "center"}}>Today's menu:</h2>
             <div style = {{  position: "relative",
                 overflow: "hidden",
                 justifyContent: "center",
