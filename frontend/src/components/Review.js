@@ -2,6 +2,9 @@ import { touchRippleClasses } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import "../Review.css"
 
+import StarRating from "./StarRating.js";
+import "./StarRating.css";
+
 import * as React from "react";
 //import Button from 'react-native'
 import {firestore} from "../firebase.js";
@@ -81,13 +84,14 @@ export default function Review(prop) {
                         <br/>
                         Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChange('image')}/>
                         <br/>
-                        Star Rating <select id="selectStar" onChange={handleChange('stars')}>
+                        {/* Star Rating <select id="selectStar" onChange={handleChange('stars')}>
                             <option value='1'>1</option>
                             <option value='2'>2</option>
                             <option value='3'>3</option>
                             <option value='4'>4</option>
                             <option value='5'>5</option>
-                        </select>
+                        </select> */}
+                        Star Rating <StarRating/>
                         <br/>
                     </form>
                     <button className="button0" onClick={()=>writeDb()}>Submit</button>
