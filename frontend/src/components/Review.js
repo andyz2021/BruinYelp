@@ -59,26 +59,35 @@ export default function Review(prop) {
             stars: num,
 
         }));
-        console.log(reviewData);
+       // console.log(reviewData);
     }
 
     //Function that will write to the database. You should call this on the "Submit" Button onClick function
     // const writeDb = () => {
     //     console.log(reviewData)
     // }
-    const writeDb = () => {
+     const writeDb = async() => {
         //console.log(reviewData);
-        setreviewData((prev) => ({
-            ...prev,
-            date: new Date(),
-        }));
-        console.log(reviewData);
+        // setreviewData((prev) => ({
+        //     ...prev,
+        //     date: new Date(),
+        // })); //right now I think this sometimes runs after addDoc
+
+        //console.log(reviewData);
+
         if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0)
         {
-            addDoc(database, {image: reviewData.image, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date: reviewData.date});//Add User, Dining hall, Date
-            window.location.reload(false);
+            const result = await addDoc(database, {image: reviewData.image, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date()});//Add User, Dining hall, Date
+            refresh(result);
+            // refresh(); //refreshes too early
        }
        
+    }
+
+    const refresh = (result) => {
+        if(result){
+            window.location.reload(false);
+        }
     }
 
     //Somewhere in Return statement, add a Submit button that will allow you to submit review to DB
