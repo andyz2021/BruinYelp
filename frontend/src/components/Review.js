@@ -19,6 +19,7 @@ export default function Review(prop) {
         signedIn: false,
         posted: false,
         diningHall: null,
+        date: null,
     });
     const database = collection(firestore, "Reviews");
 
@@ -40,6 +41,7 @@ export default function Review(prop) {
     }
 
     const handleChange = (propertyName) =>(event) => {
+
         const { value } = event.target;
 
         setreviewData((prev) => ({
@@ -47,19 +49,36 @@ export default function Review(prop) {
             [propertyName]: value,
 
         }));
-        console.log(reviewData.diningHall)
+        //console.log(reviewData.diningHall)
     };
+
+    const handleStar  = (num) => {
+        console.log(num);
+        setreviewData((prev) => ({
+            ...prev,
+            stars: num,
+
+        }));
+        console.log(reviewData);
+    }
 
     //Function that will write to the database. You should call this on the "Submit" Button onClick function
     // const writeDb = () => {
     //     console.log(reviewData)
     // }
     const writeDb = () => {
-        console.log(reviewData)
-        if(reviewData.text!=="" && reviewData.image!==null)
+        //console.log(reviewData);
+        setreviewData((prev) => ({
+            ...prev,
+            date: new Date(),
+        }));
+        console.log(reviewData);
+        if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0)
         {
-            addDoc(database, {image: reviewData.image, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall});//Add User, Dining hall, Date
+            addDoc(database, {image: reviewData.image, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date: reviewData.date});//Add User, Dining hall, Date
+            window.location.reload(false);
        }
+       
     }
 
     //Somewhere in Return statement, add a Submit button that will allow you to submit review to DB
@@ -80,7 +99,7 @@ export default function Review(prop) {
                 
                     <div className="labels">
                     <form>
-                        Description <input type="text" onChange={handleChange('text')} placeholder="We'd love to know your thoughts!"/>
+                        Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="We'd love to know your thoughts!"/>
                         <br/>
                         Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChange('image')}/>
                         <br/>
@@ -91,7 +110,7 @@ export default function Review(prop) {
                             <option value='4'>4</option>
                             <option value='5'>5</option>
                         </select> */}
-                        Star Rating <StarRating/>
+                        Star Rating <StarRating handleStar={handleStar}/>
                         <br/>
                     </form>
                     <button className="button0" onClick={()=>writeDb()}>Submit</button>
