@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 // import "./StarRating.css";
-
-const StarRating = (props) => {
-    const [rating, setRating] = useState(props.stars);
+export default function StarRating(prop)  {
+    const [rating, setRating] = useState(prop.stars);
     const [hover, setHover] = useState(0);
+
+    const update = (num) => {
+        setRating(num);
+        prop.handleStar(num);
+    }
+
     return (
       <div className="star-rating">
         {[...Array(5)].map((star, index) => {
@@ -13,7 +18,7 @@ const StarRating = (props) => {
               type="button"
               key={index}
               className={index <= (hover || rating) ? "on" : "off"}
-              onClick={() => setRating(index)}
+              onClick={() => update(index)}
               onMouseEnter={() => setHover(index)}
               onMouseLeave={() => setHover(rating)}
             >
@@ -25,4 +30,4 @@ const StarRating = (props) => {
     );
   };  
   
-export default StarRating;
+//export default StarRating;
