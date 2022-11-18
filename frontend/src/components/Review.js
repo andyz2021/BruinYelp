@@ -110,7 +110,7 @@ export default function Review(prop) {
                             <option value='4'>4</option>
                             <option value='5'>5</option>
                         </select> */}
-                        Star Rating <StarRating handleStar={handleStar}/>
+                        Star Rating <StarRating stars={reviewData.stars} handleStar={handleStar}/>
                         <br/>
                     </form>
                     <button className="button0" onClick={()=>writeDb()}>Submit</button>
