@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 // import "./StarRating.css";
 
-const StarRating = () => {
-    const [rating, setRating] = useState(0);
+const StarRating = (props) => {
+    const [rating, setRating] = useState(props.stars);
     const [hover, setHover] = useState(0);
     return (
       <div className="star-rating">
