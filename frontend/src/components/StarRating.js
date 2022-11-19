@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import "./StarRating.css";
 export default function StarRating(prop)  {
     const [rating, setRating] = useState(prop.stars);
@@ -8,6 +8,9 @@ export default function StarRating(prop)  {
         setRating(num);
         prop.handleStar(num);
     }
+    useEffect(() => {
+      setRating(prop.stars);
+    }, [prop.stars]);
 
     return (
       <div className="star-rating">
