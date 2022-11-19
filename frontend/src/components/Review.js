@@ -68,7 +68,7 @@ export default function Review(prop) {
     };
 
     const handleStar  = (num) => {
-        console.log(num);
+        //console.log(num);
         setreviewData((prev) => ({
             ...prev,
             stars: num,
