@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import "./StarRating.css";
-
 export default function StarRating(prop)  {
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(prop.stars);
     const [hover, setHover] = useState(0);
 
     const update = (num) => {
         setRating(num);
         prop.handleStar(num);
     }
+    useEffect(() => {
+      setRating(prop.stars);
+    }, [prop.stars]);
 
     return (
       <div className="star-rating">

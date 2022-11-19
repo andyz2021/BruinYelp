@@ -5,6 +5,7 @@ import "../Review.css"
 import StarRating from "./StarRating.js";
 import "./StarRating.css";
 
+
 import * as React from "react";
 //import Button from 'react-native'
 import {firestore} from "../firebase.js";
@@ -17,11 +18,11 @@ export default function Review(prop) {
         image : null,
         stars: 0,
         signedIn: false,
-        posted: false,
         diningHall: null,
         date: null,
+        item : "",
     });
-    const database = collection(firestore, "Reviews");
+    const database = collection(firestore, prop.hall);
 
     React.useEffect( () => {
         // const getReviews = async () => {
@@ -38,7 +39,7 @@ export default function Review(prop) {
                 ...prev,
                 signedIn: true,
             }));
-    }
+    };
 
     const handleChange = (propertyName) =>(event) => {
 
@@ -75,9 +76,9 @@ export default function Review(prop) {
 
         //console.log(reviewData);
 
-        if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0)
+        if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0 && reviewData.item !=="")
         {
-            const result = await addDoc(database, {image: reviewData.image, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date()});//Add User, Dining hall, Date
+            const result = await addDoc(database, {image: reviewData.image, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item});//Add User, Dining hall, Date
             refresh(result);
             // refresh(); //refreshes too early
        }
@@ -94,7 +95,7 @@ export default function Review(prop) {
     //Also add image and star thing
     return(
         <React.Fragment>
-        { reviewData.signedIn && !reviewData.posted && (<div>
+        (<div>
                     {/* <button>
                         <button onClick={()=>handleClick(1)}>Add Image</button>
                         <br/><br/><br/>
@@ -108,6 +109,8 @@ export default function Review(prop) {
                 
                     <div className="labels">
                     <form>
+                        Menu Item <input type="text" id="item_input" onChange={handleChange('item')} placeholder="Which menu item are you reviewing?"/>
+                        <br/>
                         Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="We'd love to know your thoughts!"/>
                         <br/>
                         Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChange('image')}/>
@@ -119,17 +122,14 @@ export default function Review(prop) {
                             <option value='4'>4</option>
                             <option value='5'>5</option>
                         </select> */}
-                        Star Rating <StarRating handleStar={handleStar}/>
+                        Star Rating <StarRating stars={reviewData.stars} handleStar={handleStar}/>
                         <br/>
                     </form>
                     <button className="button0" onClick={()=>writeDb()}>Submit</button>
                     </div>
-                </div>)}
+                </div>)
 
-
-    {reviewData.signedIn === false && reviewData.posted === false &&
-        <button className="button1" onClick={()=>handleClick()}>Write a Review!</button>}
-        </React.Fragment>
+    </React.Fragment>
     )
 
 }
