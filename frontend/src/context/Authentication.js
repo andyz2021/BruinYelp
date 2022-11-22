@@ -1,6 +1,6 @@
 import React, {useContext, createContext, useState, useEffect} from "react"
 import { auth, provider } from "../firebase.js";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -17,9 +17,18 @@ export function AuthProvider({children}) {
     //create and set users
     const [currentUser, setCurrentUser] = useState("");
 
+    provider.setCustomParameters({
+        //prompts selecting account during each sign in
+        prompt: 'select_account'
+     });
 
     function signInWithGoogle ()  {
         return signInWithPopup(auth, provider);
+    }
+
+    function logout(){
+        //logout function, will be called in dashboard
+        return signOut(auth);
     }
 
     useEffect(() => {
@@ -33,7 +42,8 @@ export function AuthProvider({children}) {
 
     const value= {
         currentUser,
-        signInWithGoogle
+        signInWithGoogle,
+        logout
     }
 
     return (

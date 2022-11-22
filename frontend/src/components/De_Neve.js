@@ -48,7 +48,7 @@ export default function De_Neve() {
         <React.Fragment>
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>'De Neve'</h2>
+                <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>De Neve</h2>
             
                 <button className="button1" onClick={()=>handleClickWrite()}>Write a Review!</button>
                 <br></br>
