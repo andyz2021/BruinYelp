@@ -5,8 +5,8 @@ button {
     cursor: pointer;
   }
   .on {
-    color: #000;
+    color: rgb(16, 36, 215);
   }
   .off {
-    color: #ccc;
+    color: rgb(223, 223, 223);
   }
