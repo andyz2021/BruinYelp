@@ -83,13 +83,13 @@ export default function Epicuria() {
                     </form>
                 )}
                 {Reviews.map((review) => {
-                    console.log(review.stars);
+                    console.log(review.image)
                     return (
                       <div>
                           <br></br>
                           <p> Item: {review.item} </p>
                           <p>Star Rating: <StarRating stars={review.stars}/> </p>
-                           <img src={Urls[review.image]}/>
+                          {Urls[review.image] && <img src={Urls[review.image]}/>}
                           <p>Description: {review.text}</p>
                           <br></br>
                       </div>
