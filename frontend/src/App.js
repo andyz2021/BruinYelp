@@ -24,6 +24,7 @@
 //
 import Navigation from "./components/Navigation.js"
 import * as React from "react";
+import { AuthProvider } from "./context/Authentication.js"
 import axios from "axios";
 function App () {
     const [data, setData] = React.useState({
@@ -41,7 +42,9 @@ function App () {
         <>
             <h1 style={{color: 'black', display: "flex", justifyContent: "center"}}>BruinYelp</h1>
             <hr/>
-            <Navigation/>
+            <AuthProvider>
+                <Navigation/>
+            </AuthProvider>
         </>
     );
 }
