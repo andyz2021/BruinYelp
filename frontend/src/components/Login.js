@@ -1,4 +1,3 @@
-import { setUserProperties } from "firebase/analytics";
 import * as React from "react"
 import GoogleButton from 'react-google-button'
 import { useAuth } from "../context/Authentication.js";
@@ -17,16 +16,11 @@ export default function Login(){
         } catch(err)    {
             setError(err.message)
         }
-
+        //calls the signin function, but will throw an error if an error during login
     }
-
-    console.log(currentUser);
-
-
 
     return(
         <React.Fragment>
-            <h1>Hi {currentUser.displayName}!</h1>
             {error  && <Alert variant="danger"> {error} </Alert>}
             <GoogleButton onClick={signInWithGoogle} style= {{color: "#FFFFFF", }}>Login</GoogleButton>
         </React.Fragment>
