@@ -21,7 +21,32 @@
     border: 2px solid white;
     color: rgb(54, 112, 179);
   }
-  
+
+  .cap {
+    display: inline;
+    padding: 175px 60px 175px 60px;
+    text-align: center;
+    line-height: 1.5;
+    font-family: Arial;
+    color: rgba(0, 0, 0, 0.616);
+    font-weight: bold;
+    font-size: 24px;
+    width: 30%;
+    float: left;
+    margin: 20px 20px 0px 100px;
+    height: 90%;
+   /* opacity gradient border */
+    border-top: 3px solid #0f203871;
+    border-bottom: 3px solid #7791b300;
+    background-image: -webkit-linear-gradient(#0f203871, #0000000c);
+    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(##0f203871, #0000000c);
+    background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
+    background-size: 3px 100%;
+    background-position: 0 0, 100% 0;
+    background-repeat: no-repeat;
+    border-radius: 5px 5px 5px 5px;  
+  }
+
 /* inside the form */
 .labels {
     display: inline;
@@ -38,7 +63,7 @@
     height: 90%;
    /* opacity gradient border */
     border-top: 3px solid #0f203871;
-    border-bottom: 3px solid #7791b317;
+    border-bottom: 3px solid #7791b300;
     background-image: -webkit-linear-gradient(#0f203871, #0000000c);
     background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(##0f203871, #0000000c);
     background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
@@ -47,7 +72,8 @@
     background-repeat: no-repeat;
     border-radius: 5px 5px 5px 5px;
   }
-  
+
+
   /* textbox */
   input[type="text"]{
     text-align: left;

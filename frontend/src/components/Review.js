@@ -120,7 +120,9 @@ export default function Review(prop) {
                     </button>
                     <br/>
                     <button onClick={()=>writeDb()}>Submit</button> */}
-                
+                    <div className="cap">
+                        <h2>Share your thoughts with fellow Bruins!</h2>
+                    </div>
                     <div className="labels">
                     <form>
                         Menu Item <input type="text" id="item_input" onChange={handleChange('item')} placeholder="Which menu item are you reviewing?"/>
