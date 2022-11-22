@@ -18,9 +18,13 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink to="/De_Neve" activeStyle>
                         De Neve
-                    </NavLink>
+                    </NavLink >
+                    <NavLink to="/Login" activeStyle>
+                        Login
+                    </NavLink >
                 </NavMenu>
             </Nav>
+
         </>
     );
 };
