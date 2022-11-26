@@ -26,7 +26,7 @@ export default function Login(){
 
     return(
         <React.Fragment>
-            <h1>Hi {currentUser.displayName}!</h1>
+            {currentUser.displayName && <h1>Hi {currentUser.displayName}!</h1>}
             {error  && <Alert variant="danger"> {error} </Alert>}
             <GoogleButton onClick={signInWithGoogle} style= {{color: "#FFFFFF", }}>Login</GoogleButton>
         </React.Fragment>
