@@ -1,11 +1,12 @@
 import * as React from "react";
 import Review from './Review.js';
-import {firestore} from "../firebase.js";
-import {where, query, addDoc, collection, getDocs, orderBy} from "@firebase/firestore";
+import {firestore, uploadImage} from "../firebase.js";
+import {where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc} from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import {displayImage} from "../firebase.js"
 import {getDownloadURL} from "firebase/storage";
 import TextField from "@mui/material/TextField";
+import makeid from "./generate_name";
 
 
 export default function Epicuria() {
@@ -36,6 +37,8 @@ export default function Epicuria() {
     else{
         meal_period = "Dinner";
     }
+    //const database = collection(firestore, "Epicuria/"+current_day+"/"+meal_period);
+    const database = collection(firestore, "Epicuria");
     
     
     React.useEffect(() => {
@@ -67,7 +70,7 @@ export default function Epicuria() {
 
         const getReviews = async () => {
             const allReviews = await getDocs(database);
-            console.log(allReviews.docs);
+            //console.log(allReviews.docs);
             //console.log(allReviews.docs);
             allReviews.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
@@ -75,9 +78,9 @@ export default function Epicuria() {
             });
             setReviews(allReviews.docs.map((doc => ({...doc.data()}))));
             for (const item of allReviews.docs) {
-                console.log(item.data().image)
+                //console.log(item.data().image)
                 const img = await displayImage("Epicuria", item.data().image);
-                console.log(img)
+                //console.log(img)
                 setUrls((prev) => ({
                     ...prev,
                     [item.data().image]: img,
@@ -100,7 +103,7 @@ export default function Epicuria() {
         else if(type === "search")
         {
             setsearchBy(value);
-            console.log(sortBy);
+            console.log(searchBy);
         }
 
     };
@@ -133,6 +136,13 @@ export default function Epicuria() {
         }
 
     }
+
+    const updateUpvotes = async(key, num) => {
+
+        const result = await updateDoc(doc(database, key), {upvotes: num+1});//Add User, Dining hall, Date
+        setIncrement(increment+1);
+    }
+
     return(
         <React.Fragment>
             {write === false && ( //if you have not clicked "write a review"
@@ -157,8 +167,8 @@ export default function Epicuria() {
                 { searchOptions === true && ( //if you have clicked "sort by"
                     <form>
                         <select className = "button1" id="selectSearch" onChange={handleSort("search")}>
-                            <option value='0'>Search for User</option>
-                            <option value='1'>Search for Menu Item</option>
+                            <option value='0'>Search for Menu Item</option>
+                            <option value='1'>Search for User</option>
                         </select>
                     </form>)}
                     { searchOptions === true && (
@@ -170,12 +180,15 @@ export default function Epicuria() {
 
 
                 {Reviews.map((review) => {
+                    //Add button for upvotes, increment upvote count
                     return (
                       <div>
                           <br></br>
+                          <button onClick = {()=>updateUpvotes(review.image, review.upvotes)}> Upvote</button>
                           <p> Item: {review.item} </p>
+                          <p>Upvotes: {review.upvotes}</p>
                           <p>Star Rating: <StarRating stars={review.stars}/> </p>
-                          {Urls[review.image] && <img src={Urls[review.image]}/>}
+                          {Urls[review.image] && <img style={{width: "50%", height: "50%"}} src={Urls[review.image]}/>}
                           <p>Description: {review.text}</p>
                           <br></br>
                       </div>

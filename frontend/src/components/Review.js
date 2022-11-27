@@ -24,6 +24,7 @@ export default function Review(prop) {
         diningHall: null,
         item : "",
         date: new Date(),
+        upvotes: 0,
     });
     let currentUser = useAuth();
     const database = collection(firestore, prop.hall+"/"+prop.day+"/"+prop.meal_period);
@@ -93,7 +94,7 @@ export default function Review(prop) {
         {
             const name = makeid(10);
             uploadImage(reviewData.diningHall, name, reviewData.image);
-            const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName});//Add User, Dining hall, Date
+            const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
             refresh(result);
             // refresh(); //refreshes too early
        }
