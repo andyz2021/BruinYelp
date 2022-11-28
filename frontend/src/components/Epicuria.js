@@ -1,12 +1,14 @@
 import * as React from "react";
 import Review from './Review.js';
 import {firestore, uploadImage} from "../firebase.js";
-import {where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc} from "@firebase/firestore";
+import {where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt} from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import {displayImage} from "../firebase.js"
 import {getDownloadURL} from "firebase/storage";
 import TextField from "@mui/material/TextField";
 import makeid from "./generate_name";
+import { Box } from '@material-ui/core'
+import "../Review.css"
 
 
 export default function Epicuria() {
@@ -37,8 +39,8 @@ export default function Epicuria() {
     else{
         meal_period = "Dinner";
     }
-    //const database = collection(firestore, "Epicuria/"+current_day+"/"+meal_period);
-    const database = collection(firestore, "Epicuria");
+    const database_upvote = collection(firestore, "Epicuria/"+current_day+"/"+meal_period);
+    //const database = collection(firestore, "Epicuria");
     
     
     React.useEffect(() => {
@@ -48,22 +50,26 @@ export default function Epicuria() {
             if(sortBy === '0')
             {
                 //Add date+meal period
-                database = query(collection(firestore, "Epicuria"), orderBy("date","asc")); //can't do orderBy with where if different fields
+                database = query(collection(firestore, "Epicuria/"+current_day+"/"+meal_period), orderBy("date","asc")); //can't do orderBy with where if different fields
             }
             else
             {
-                database = query(collection(firestore, "Epicuria"), orderBy("stars","desc")); //can't do orderBy with where if different fields
+                database = query(collection(firestore, "Epicuria/"+current_day+"/"+meal_period), orderBy("stars","desc")); //can't do orderBy with where if different fields
             }
         }
         else
         {
             if(searchBy === '0')
             {
-                database = query(collection(firestore, "Epicuria"), where("item", "in", [searchBar, searchBar.toLowerCase(), searchBar.toUpperCase()])); //can't do orderBy with where if different fields
+                database = query(collection(firestore, "Epicuria/"+current_day+"/"+meal_period), orderBy("item"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
             }
             else if (searchBy === '1')
             {
-                database = query(collection(firestore, "Epicuria"), where("user", "in", [searchBar, searchBar.toLowerCase(), searchBar.toUpperCase()])); //can't do orderBy with where if different fields
+                database = query(collection(firestore, "Epicuria/"+current_day+"/"+meal_period), orderBy("user"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
+            }
+            else if (searchBy === '2')
+            {
+                database = query(collection(firestore, "Epicuria/"+current_day+"/"+meal_period), orderBy("text"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
             }
 
         }
@@ -139,7 +145,7 @@ export default function Epicuria() {
 
     const updateUpvotes = async(key, num) => {
 
-        const result = await updateDoc(doc(database, key), {upvotes: num+1});//Add User, Dining hall, Date
+        const result = await updateDoc(doc(database_upvote, key), {upvotes: num+1});//Add User, Dining hall, Date
         setIncrement(increment+1);
     }
 
@@ -169,11 +175,24 @@ export default function Epicuria() {
                         <select className = "button1" id="selectSearch" onChange={handleSort("search")}>
                             <option value='0'>Search for Menu Item</option>
                             <option value='1'>Search for User</option>
+                            <option value='2'>Search for Description</option>
                         </select>
                     </form>)}
+                    <br></br>
                     { searchOptions === true && (
-                        <TextField value={searchBar} onChange={handleChangeText} onKeyUp = {updateChange} style={{marginTop: '.8rem'}} label={<span>Search</span>}
-                        type="text"  />
+
+                        <div style={{display: "flex", justifyContent: "center"}}>
+                            <input  style= {{    textAlign: "left",
+                                display: "block",
+                                margin: 0,
+                                borderRadius: "10px",
+                                height: "80px",
+                                width: "82%",
+                                padding: "0px 20px",
+                                border: "none",
+                                resize: "none",
+                                backgroundColor: "rgb(255, 255, 255)"}} value={searchBar}  onChange={handleChangeText} onKeyUp = {updateChange}  type="text" placeholder={"Search"} />
+                        </div>
                     )}
 
 
@@ -188,7 +207,7 @@ export default function Epicuria() {
                           <p> Item: {review.item} </p>
                           <p>Upvotes: {review.upvotes}</p>
                           <p>Star Rating: <StarRating stars={review.stars}/> </p>
-                          {Urls[review.image] && <img style={{width: "50%", height: "50%"}} src={Urls[review.image]}/>}
+                          {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                           <p>Description: {review.text}</p>
                           <br></br>
                       </div>
