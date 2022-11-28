@@ -16,13 +16,17 @@ export default function Bruin_Plate() {
     React.useEffect(() => {
         let database;
         if(sortBy === '0')
-        {
-            database = query(collection(firestore, "Bruin_Plate"), orderBy("date","asc")); //can't do orderBy with where if different fields
-        }
-        else
-        {
-            database = query(collection(firestore, "Bruin_Plate"), orderBy("stars","desc")); //can't do orderBy with where if different fields
-        }
+            {
+                //Add date+meal period
+                database = query(collection(firestore, "Bruin_Plate"), orderBy("date","asc")); //can't do orderBy with where if different fields
+            }
+        else if(sortBy === '1')
+            {
+                database = query(collection(firestore, "Bruin_Plate"), orderBy("stars","desc")); //can't do orderBy with where if different fields
+            }
+        else{
+                database = query(collection(firestore, "Bruin_Plate"), orderBy("upvotes","desc"));
+            }
         const getReviews = async () => {
             const allReviews = await getDocs(database);
             console.log(allReviews.docs);
@@ -71,6 +75,7 @@ export default function Bruin_Plate() {
                         <select className = "button1" id="selectSort" onChange={handleSort()}>
                             <option value='0'>Most Recent</option>
                             <option value='1'>Highest Rating</option>
+                            <option value='2'>Upvotes</option>
                         </select>
                     </form>
                 )}

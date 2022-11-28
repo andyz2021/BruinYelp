@@ -16,13 +16,17 @@ export default function De_Neve() {
     React.useEffect(() => {
         let database;
         if(sortBy === '0')
-        {
-            database = query(collection(firestore, "De_Neve"), orderBy("date","asc")); //can't do orderBy with where if different fields
-        }
-        else
-        {
-            database = query(collection(firestore, "De_Neve"), orderBy("stars","desc")); //can't do orderBy with where if different fields
-        }
+            {
+                //Add date+meal period
+                database = query(collection(firestore, "De_Neve"), orderBy("date","asc")); //can't do orderBy with where if different fields
+            }
+        else if(sortBy === '1')
+            {
+                database = query(collection(firestore, "De_Neve"), orderBy("stars","desc")); //can't do orderBy with where if different fields
+            }
+        else{
+                database = query(collection(firestore, "De_Neve"), orderBy("upvotes","desc"));
+            }
         const getReviews = async () => {
             const allReviews = await getDocs(database);
             console.log(allReviews.docs);
@@ -71,6 +75,7 @@ export default function De_Neve() {
                         <select className = "button1" id="selectSort" onChange={handleSort()}>
                             <option value='0'>Most Recent</option>
                             <option value='1'>Highest Rating</option>
+                            <option value='2'>Upvotes</option>
                         </select>
                     </form>
                 )}
