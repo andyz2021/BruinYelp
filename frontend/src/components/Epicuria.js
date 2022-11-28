@@ -57,7 +57,7 @@ export default function Epicuria() {
                 database = query(collection(firestore, "Epicuria/"+current_day+"/"+meal_period), orderBy("stars","desc")); //can't do orderBy with where if different fields
             }
             else{
-                database = query(collection(firestore, "Epicuria"), orderBy("upvotes","desc"));
+                database = query(collection(firestore, "Epicuria/"+current_day+"/"+meal_period), orderBy("upvotes","desc"));
             }
         }
         else

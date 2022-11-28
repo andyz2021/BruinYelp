@@ -50,14 +50,14 @@ export default function De_Neve() {
             if(sortBy === '0')
                 {
                     //Add date+meal period
-                    database = query(collection(firestore, "De_Neve"), orderBy("date","asc")); //can't do orderBy with where if different fields
+                    database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("date","asc")); //can't do orderBy with where if different fields
                 }
             else if(sortBy === '1')
                 {
-                    database = query(collection(firestore, "De_Neve"), orderBy("stars","desc")); //can't do orderBy with where if different fields
+                    database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("stars","desc")); //can't do orderBy with where if different fields
                 }
             else{
-                    database = query(collection(firestore, "De_Neve"), orderBy("upvotes","desc"));
+                    database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("upvotes","desc"));
                 }
         }
         else
