@@ -1,10 +1,15 @@
 .menubar {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
-    from(rgb(255, 255, 255)), to(rgba(0,0,0,0))); /* opacity gradient */
-    height: 400px;
+    from(rgb(255, 255, 255)), to(rgba(0, 0, 0, 0.185)));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
     border-radius: 10px;
-    margin: 40px 50px;
-    padding: 20px;
-    opacity: 0.6;
+    margin: 50px 50px;
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
 }
+
