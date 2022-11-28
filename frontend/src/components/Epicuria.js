@@ -50,9 +50,12 @@ export default function Epicuria() {
                 //Add date+meal period
                 database = query(collection(firestore, "Epicuria"), orderBy("date","asc")); //can't do orderBy with where if different fields
             }
-            else
+            else if(sortBy === '1')
             {
                 database = query(collection(firestore, "Epicuria"), orderBy("stars","desc")); //can't do orderBy with where if different fields
+            }
+            else{
+                database = query(collection(firestore, "Epicuria"), orderBy("upvotes","desc"));
             }
         }
         else
@@ -158,6 +161,7 @@ export default function Epicuria() {
                         <select className = "button1" id="selectSort" onChange={handleSort("sort")}>
                             <option value='0'>Most Recent</option>
                             <option value='1'>Highest Rating</option>
+                            <option value='2'>Upvotes</option>
                         </select>
                     </form>
                 )}
@@ -184,7 +188,13 @@ export default function Epicuria() {
                     return (
                       <div>
                           <br></br>
-                          <button onClick = {()=>updateUpvotes(review.image, review.upvotes)}> Upvote</button>
+                          <div className="square">
+                            <div className="content">
+                                <br></br>
+                                <button className="arrow" onClick = {()=>updateUpvotes(review.image, review.upvotes)}> 
+                                </button>
+                            </div>
+                          </div>
                           <p> Item: {review.item} </p>
                           <p>Upvotes: {review.upvotes}</p>
                           <p>Star Rating: <StarRating stars={review.stars}/> </p>
