@@ -24,25 +24,27 @@
 //
 import Navigation from "./components/Navigation.js"
 import * as React from "react";
+import { AuthProvider } from "./context/Authentication.js"
 import axios from "axios";
 function App () {
     const [data, setData] = React.useState({
         mess: null,
     })
-    React.useEffect(() => {
-        fetch("http://localhost:3001/api")
-            .then((res) => res.json())
-            .then((data) => setData((prev) => ({
-                ...prev,
-                mess: data.message,
-            })))
-    },[])
+    // React.useEffect(() => {
+    //     fetch("http://localhost:3001/api")
+    //         .then((res) => res.json())
+    //         .then((data) => setData((prev) => ({
+    //             ...prev,
+    //             mess: data.message,
+    //         })))
+    // },[])
     return (
         <>
             <h1 style={{color: 'black', display: "flex", justifyContent: "center"}}>BruinYelp</h1>
             <hr/>
-            <Navigation/>
-            {data.mess && <p>{data.mess}</p>}
+            <AuthProvider>
+                <Navigation/>
+            </AuthProvider>
         </>
     );
 }
