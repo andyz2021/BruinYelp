@@ -12,7 +12,6 @@ const Navbar = () => {
     //the button will either display login or dashboard and redirect accordingly
 
     return (
-        <>
             <Nav>
                 <NavMenu>
                     <NavLink to="/" activeStyle>
@@ -33,8 +32,6 @@ const Navbar = () => {
 
                 </NavMenu>
             </Nav>
-
-        </>
     );
 };
 
