@@ -8,7 +8,7 @@
     border-radius: 10px;
     border: none;
     background-color: white;
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    -webkit-mask-image: -webkitgit-gradient(linear, left top, left bottom, 
     from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
     opacity: 0.8;
     color: rgb(0, 0, 0);
@@ -39,7 +39,7 @@
     border-top: 3px solid #0f203871;
     border-bottom: 3px solid #7791b300;
     background-image: -webkit-linear-gradient(#0f203871, #0000000c);
-    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(##0f203871, #0000000c);
+    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(#0f203871, #0000000c);
     background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
     background-size: 3px 100%;
     background-position: 0 0, 100% 0;
@@ -65,7 +65,7 @@
     border-top: 3px solid #0f203871;
     border-bottom: 3px solid #7791b300;
     background-image: -webkit-linear-gradient(#0f203871, #0000000c);
-    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(##0f203871, #0000000c);
+    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(#0f203871, #0000000c);
     background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
     background-size: 3px 100%;
     background-position: 0 0, 100% 0;
