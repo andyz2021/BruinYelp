@@ -40,7 +40,7 @@ function App () {
     // },[])
     return (
         <>
-            <h1 style={{color: 'black', display: "flex", justifyContent: "center"}}>BruinYelp</h1>
+            <h1 className = "title" style={{color: 'black', display: "flex", margin: "20px", justifyContent: "center", fontFamily: "Arial", fontWeight: "bold"}}>BruinYelp</h1>
             <hr/>
             <AuthProvider>
                 <Navigation/>
