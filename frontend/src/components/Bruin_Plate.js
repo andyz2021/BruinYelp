@@ -1,6 +1,6 @@
 import * as React from "react";
 import Review from './Review.js';
-import {firestore} from "../firebase.js";
+import {displayImage, firestore} from "../firebase.js";
 import {where, query, addDoc, collection, getDocs, orderBy} from "@firebase/firestore";
 import StarRating from './StarRating.js'
 
@@ -11,6 +11,8 @@ export default function Bruin_Plate() {
     const [sortBy, setsortBy] = React.useState('0');
     const [sortOptions, setsortOptions] = React.useState(false); //determines if you can see the sort options (triggered when you hit "sort by")
     const [write, setwrite] = React.useState(false); //set to true when user clicks "write a review"
+    const [Urls, setUrls] = React.useState({
+    });
     React.useEffect(() => {
         let database;
         if(sortBy === '0')
@@ -25,6 +27,15 @@ export default function Bruin_Plate() {
             const allReviews = await getDocs(database);
             console.log(allReviews.docs);
             setReviews(allReviews.docs.map((doc => ({...doc.data()}))));
+            for (const item of allReviews.docs) {
+                console.log(item.data().image)
+                const img = await displayImage("Bruin_Plate", item.data().image);
+                console.log(img)
+                setUrls((prev) => ({
+                    ...prev,
+                    [item.data().image]: img,
+                }));
+            }
         };
 
         getReviews();
@@ -70,7 +81,7 @@ export default function Bruin_Plate() {
                         <br></br>
                         <p> Item: {review.item} </p>
                         <p>Star Rating: <StarRating stars={review.stars}/> </p>
-                        <img src= {review.image}/>
+                        {Urls[review.image] && <img src={Urls[review.image]}/>}
                         <p>Description: {review.text}</p>
                         <br></br>
                     </div>
