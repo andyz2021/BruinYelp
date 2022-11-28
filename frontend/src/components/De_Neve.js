@@ -48,14 +48,17 @@ export default function De_Neve() {
         if(searchBar === "")
         {
             if(sortBy === '0')
-            {
-                //Add date+meal period
-                database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("date","asc")); //can't do orderBy with where if different fields
-            }
-            else
-            {
-                database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("stars","desc")); //can't do orderBy with where if different fields
-            }
+                {
+                    //Add date+meal period
+                    database = query(collection(firestore, "De_Neve"), orderBy("date","asc")); //can't do orderBy with where if different fields
+                }
+            else if(sortBy === '1')
+                {
+                    database = query(collection(firestore, "De_Neve"), orderBy("stars","desc")); //can't do orderBy with where if different fields
+                }
+            else{
+                    database = query(collection(firestore, "De_Neve"), orderBy("upvotes","desc"));
+                }
         }
         else
         {
@@ -164,6 +167,7 @@ export default function De_Neve() {
                             <select className = "button1" id="selectSort" onChange={handleSort("sort")}>
                                 <option value='0'>Most Recent</option>
                                 <option value='1'>Highest Rating</option>
+                                <option value='2'>Upvotes</option>
                             </select>
                         </form>
                     )}

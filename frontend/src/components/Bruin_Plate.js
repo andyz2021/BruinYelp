@@ -47,15 +47,18 @@ export default function Bruin_Plate() {
         let database;
         if(searchBar === "")
         {
-            if(sortBy === '0')
-            {
-                //Add date+meal period
-                database = query(collection(firestore, "Bruin_Plate/"+current_day+"/"+meal_period), orderBy("date","asc")); //can't do orderBy with where if different fields
-            }
-            else
-            {
-                database = query(collection(firestore, "Bruin_Plate/"+current_day+"/"+meal_period), orderBy("stars","desc")); //can't do orderBy with where if different fields
-            }
+          if(sortBy === '0')
+              {
+                  //Add date+meal period
+                  database = query(collection(firestore, "Bruin_Plate"), orderBy("date","asc")); //can't do orderBy with where if different fields
+              }
+          else if(sortBy === '1')
+              {
+                  database = query(collection(firestore, "Bruin_Plate"), orderBy("stars","desc")); //can't do orderBy with where if different fields
+              }
+          else{
+                  database = query(collection(firestore, "Bruin_Plate"), orderBy("upvotes","desc"));
+              }
         }
         else
         {
@@ -156,7 +159,9 @@ export default function Bruin_Plate() {
                     <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>Bruin Plate</h2>
 
                     <button className="button1" onClick={()=>handleClickWrite()}>Write a Review!</button>
+                    
                     <br></br>
+                    
                     { sortOptions === false && ( //if you have not clicked "sort by"
                         <button className="button1" onClick = {()=>handleClick("sort")}>Sort By...</button>)}
                     { sortOptions === true && ( //if you have clicked "sort by"
@@ -164,10 +169,12 @@ export default function Bruin_Plate() {
                             <select className = "button1" id="selectSort" onChange={handleSort("sort")}>
                                 <option value='0'>Most Recent</option>
                                 <option value='1'>Highest Rating</option>
+                                <option value='2'>Upvotes</option>
                             </select>
                         </form>
                     )}
                     <br></br>
+                    
                     { searchOptions === false && ( //if you have not clicked "sort by"
                         <button className="button1" onClick = {()=>handleClick("search")}>Search For...</button>)}
                     { searchOptions === true && ( //if you have clicked "sort by"

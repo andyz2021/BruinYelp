@@ -95,19 +95,12 @@ export default function Review(prop) {
             const name = makeid(10);
             const image = uploadImage(reviewData.diningHall, name, reviewData.image);
             const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
-
             console.log(image)
             console.log(result)
             refresh(image);
             // refresh(); //refreshes too early
        }
        
-    }
-
-    const refresh = (result) => {
-        if(result){
-            window.location.reload(false);
-        }
     }
 
     //Somewhere in Return statement, add a Submit button that will allow you to submit review to DB
