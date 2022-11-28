@@ -187,7 +187,7 @@ export default function Epicuria() {
                                 margin: 0,
                                 borderRadius: "10px",
                                 height: "80px",
-                                width: "82%",
+                                width: "85%",
                                 padding: "0px 20px",
                                 border: "none",
                                 resize: "none",

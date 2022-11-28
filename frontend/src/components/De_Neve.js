@@ -175,13 +175,22 @@ export default function De_Neve() {
                             <select className = "button1" id="selectSearch" onChange={handleSort("search")}>
                                 <option value='0'>Search for Menu Item</option>
                                 <option value='1'>Search for User</option>
-                                <option value='1'>Search for Description</option>
+                                <option value='2'>Search for Description</option>
                             </select>
                         </form>)}
                     <br></br>
                     { searchOptions === true && (
                         <div style={{display: "flex", justifyContent: "center"}}>
-                            <TextField  value={searchBar}  onChange={handleChangeText} onKeyUp = {updateChange} label={<span>Search</span>} type="text"  />
+                            <input  style= {{    textAlign: "left",
+                                display: "block",
+                                margin: 0,
+                                borderRadius: "10px",
+                                height: "80px",
+                                width: "85%",
+                                padding: "0px 20px",
+                                border: "none",
+                                resize: "none",
+                                backgroundColor: "rgb(255, 255, 255)"}} value={searchBar}  onChange={handleChangeText} onKeyUp = {updateChange}  type="text" placeholder={"Search"} />
                         </div>
                     )}
 
