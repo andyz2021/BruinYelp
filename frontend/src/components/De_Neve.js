@@ -1,13 +1,11 @@
 import * as React from "react";
 import Review from './Review.js';
-import { firestore, uploadImage } from "../firebase.js";
-import { where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt } from "@firebase/firestore";
-import StarRating from './StarRating.js'
-import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
-import TextField from "@mui/material/TextField";
 import makeid from "./generate_name";
-// import { Box } from '@material-ui/core'
+import {firestore} from "../firebase.js";
+import {query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
+import StarRating from './StarRating.js'
+import {displayImage} from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
 import { LoginPopup } from "./Login.js";
@@ -205,11 +203,18 @@ export default function De_Neve() {
                         return (
                             <div>
                                 <br></br>
-                                <button onClick={() => updateUpvotes(review.image, review.upvotes)}> Upvote</button>
+                                <div className="square">
+                                    <div className="content">
+                                        <br></br>
+                                        <button className="arrow" onClick = {()=>updateUpvotes(review.image, review.upvotes)}>
+                                        </button>
+                                    </div>
+                                </div>
                                 <p> Item: {review.item} </p>
+                                <p> User: {review.user} </p>
                                 <p>Upvotes: {review.upvotes}</p>
-                                <p>Star Rating: <StarRating stars={review.stars} /> </p>
-                                {Urls[review.image] && <img style={{ height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px" }} src={Urls[review.image]} />}
+                                <p>Star Rating: <StarRating stars={review.stars} change={"false"} /> </p>
+                                {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                                 <p>Description: {review.text}</p>
                                 <br></br>
                             </div>
