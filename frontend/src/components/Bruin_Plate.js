@@ -4,10 +4,6 @@ import {firestore, uploadImage} from "../firebase.js";
 import {where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt} from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import {displayImage} from "../firebase.js"
-import {getDownloadURL} from "firebase/storage";
-import TextField from "@mui/material/TextField";
-import makeid from "./generate_name";
-import { Box } from '@material-ui/core'
 import "../Review.css"
 
 

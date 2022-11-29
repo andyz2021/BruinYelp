@@ -34,7 +34,7 @@ Next, change directory into frontend and install the necessary packages there.
 
 ### Run the App
 
-Run the app simply by typing in the command:
+Run the app simply by typing in the command inside the frontend directory:
 
 ### `npm start`
 
