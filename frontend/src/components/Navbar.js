@@ -10,7 +10,7 @@ const Navbar = () => {
     let loginOrDash = <LoginButton />
     loginOrDash = (currentUser != null)
         ? <NavLink to="/Dashboard" activeStyle>Dashboard</NavLink >
-        : <LoginButton />
+        : <NavLink><LoginButton /></NavLink>
     //the button will either display login or dashboard and redirect accordingly
 
     return (
