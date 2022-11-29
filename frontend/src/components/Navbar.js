@@ -2,13 +2,15 @@ import React from "react";
 import { Nav, NavLink, NavMenu }
     from "./NavbarElements.js";
 import { useAuth } from "../context/Authentication.js";
+import { LoginButton } from "./Login"
 
 const Navbar = () => {
-    let {currentUser}=useAuth();
+    let { currentUser } = useAuth();
 
-    let loginOrDash= (currentUser==null)
-        ?"Login"
-        : "Dashboard"
+    let loginOrDash = <LoginButton />
+    loginOrDash = (currentUser != null)
+        ? <NavLink to="/Dashboard" activeStyle>Dashboard</NavLink >
+        : <NavLink><LoginButton /></NavLink>
     //the button will either display login or dashboard and redirect accordingly
 
     return (
@@ -26,9 +28,8 @@ const Navbar = () => {
                     <NavLink to="/De_Neve" activeStyle>
                         De Neve
                     </NavLink >
-                    <NavLink to={loginOrDash} activeStyle>
-                        {loginOrDash}
-                    </NavLink >
+
+                    {loginOrDash}
 
                 </NavMenu>
             </Nav>
