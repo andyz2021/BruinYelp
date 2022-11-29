@@ -9,9 +9,10 @@ import "./StarRating.css";
 import * as React from "react";
 //import Button from 'react-native'
 import {firestore} from "../firebase.js";
-import {addDoc, collection, getDocs} from "@firebase/firestore";
+import {addDoc, collection, setDoc, doc} from "@firebase/firestore";
 import {uploadImage} from '../firebase.js';
-import makeid from './generate_name.js'
+import makeid from './generate_name.js';
+import {useAuth} from "../context/Authentication";
 
 //Pass in dining hall as a prop
 export default function Review(prop) {
@@ -23,9 +24,11 @@ export default function Review(prop) {
         diningHall: null,
         item : "",
         date: new Date(),
+        upvotes: 0,
     });
-    const database = collection(firestore, prop.hall);
-
+    let currentUser = useAuth();
+    const database = collection(firestore, prop.hall+"/"+prop.day+"/"+prop.meal_period);
+    const database_all = collection(firestore, "Reviews");
     React.useEffect( () => {
         // const getReviews = async () => {
         // //Should be reading from DB
@@ -87,13 +90,17 @@ export default function Review(prop) {
         // })); //right now I think this sometimes runs after addDoc
 
         //console.log(reviewData);
-
+        console.log(currentUser.currentUser.displayName)
         if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0 && reviewData.item !=="")
         {
             const name = makeid(10);
-            uploadImage("Epicuria", name, reviewData.image);
-            const result = await addDoc(database, {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item});//Add User, Dining hall, Date
-            refresh(result);
+            const image = uploadImage(reviewData.diningHall, name, reviewData.image);
+            const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
+            const result_2 = await setDoc(doc(database_all, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
+
+            console.log(image)
+            console.log(result)
+            refresh(image);
             // refresh(); //refreshes too early
        }
        
@@ -105,11 +112,12 @@ export default function Review(prop) {
         }
     }
 
+
     //Somewhere in Return statement, add a Submit button that will allow you to submit review to DB
     //Also add image and star thing
     return(
         <React.Fragment>
-        (<div>
+        <div>
                     {/* <button>
                         <button onClick={()=>handleClick(1)}>Add Image</button>
                         <br/><br/><br/>
@@ -143,7 +151,7 @@ export default function Review(prop) {
                     </form>
                     <button className="button0" onClick={writeDb}>Submit</button>
                     </div>
-                </div>)
+                </div>
 
     </React.Fragment>
     )
