@@ -1,5 +1,3 @@
-import { touchRippleClasses } from "@mui/material";
-import TextField from '@mui/material/TextField';
 import "../Review.css"
 
 import StarRating from "./StarRating.js";
@@ -7,9 +5,8 @@ import "./StarRating.css";
 
 
 import * as React from "react";
-//import Button from 'react-native'
 import {firestore} from "../firebase.js";
-import {addDoc, collection, setDoc, doc} from "@firebase/firestore";
+import {collection, setDoc, doc} from "@firebase/firestore";
 import {uploadImage} from '../firebase.js';
 import makeid from './generate_name.js';
 import {useAuth} from "../context/Authentication";
