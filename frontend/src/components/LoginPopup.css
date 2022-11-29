@@ -9,11 +9,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 
 }
 
 .pop-inside {
-    position: relative;
+    position: absolute;
     padding: 32px;
     width: 100%;
     max-width: 640px;
@@ -21,6 +22,7 @@
 }
 
 .pop-inside .exit {
+    float: right;
     position: absolute;
     top: 16px;
     right: 16px;
