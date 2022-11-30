@@ -30,7 +30,6 @@ export default function Epicuria() {
     const current_day = 30 * current_date.getMonth() + current_date.getDate();
     const current_hour = current_date.getHours();
     let meal_period;
-    console.log(current_hour)
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
@@ -217,9 +216,11 @@ export default function Epicuria() {
                                         </button>
                                     </div>
                             </div>
+                                <br></br>
                             <p> Item: {review.item} </p>
                             <p> User: {review.user} </p>
-                            <p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>
+                            {/*<p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>*/}
+                            <p>Upvotes: {review.upvotes}</p>
                             <p>Star Rating: <StarRating stars={review.stars} change={"false"}/> </p>
                             {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                             <p>Description: {review.text}</p>
