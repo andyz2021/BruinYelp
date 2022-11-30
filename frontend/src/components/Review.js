@@ -100,6 +100,12 @@ export default function Review(prop) {
             refresh(image);
             // refresh(); //refreshes too early
        }
+    
+       const refresh = (result) => {
+        if(result){
+            window.location.reload(false);
+        }
+    }
        
     }
 
