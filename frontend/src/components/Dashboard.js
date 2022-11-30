@@ -9,8 +9,8 @@ import StarRating from './StarRating.js'
 import "../Dashboard.css"
 
 export default function Dashboard(){
-    const {logout} = useAuth();
-    let {currentUser} =useAuth();
+    const {logout} =  useAuth();
+    let {currentUser} = useAuth();
     const [error, setError] = React.useState("")
     const navigate= useNavigate();
     const [numReviews, setnumReviews] = React.useState(0)
@@ -18,9 +18,14 @@ export default function Dashboard(){
     const [Reviews, setReviews] = React.useState([]);
     const [Urls, setUrls] = React.useState({
     });
-    React.useEffect(() => {
-        const database = query(collection(firestore, "Reviews"), where("user", "==", currentUser.displayName));
 
+    React.useEffect(() => {
+        let database;
+        console.log(currentUser)
+        if(currentUser) {
+            console.log("true")
+            database = query(collection(firestore, "Reviews"), where("user", "==", currentUser.displayName));
+        }
         const getReviews = async () => {
             const snapshot =  await getCountFromServer(database);
             //console.log('count: ', snapshot.data().count);
@@ -29,17 +34,25 @@ export default function Dashboard(){
             setReviews(allReviews.docs.map((doc => ({...doc.data()}))));
             for (const item of allReviews.docs) {
                 const img = await displayImage("Reviews", item.data().image);
-                const u = numUpvotes
-                setnumUpvotes(u+item.data().upvotes);
                 setUrls((prev) => ({
                     ...prev,
                     [item.data().image]: img,
                 }));
             }
+            let n = 0;
+            allReviews.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                n = n + doc.data().upvotes;
+
+            });
+            setnumUpvotes(n);
+
 
         };
-        getReviews(database);
-    }, []);
+
+            getReviews(database);
+
+    }, [currentUser]);
 
     const handleLogout = async () => {
         //catches errors, and navigates back to home once we logout
