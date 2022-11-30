@@ -209,32 +209,15 @@ export default function Epicuria() {
                         //Add button for upvotes, increment upvote count
                         return (   
                             <div>
-<<<<<<< HEAD
                                 <div className="reviewbox">               
-                                <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
-                                <b> {review.upvotes}</b>
-                                <p><b>Item: </b>{review.item} </p>
-                                <p><b>User: </b>{review.user} </p>
-                                <p><StarRating stars={review.stars} change={"false"}/> </p>
-                                <p>{review.text}</p>
-                                {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-=======
+                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
+                                    <b> {review.upvotes}</b>
+                                    <p><b>Item: </b>{review.item} </p>
+                                    <p><b>User: </b>{review.user} </p>
+                                    <p><StarRating stars={review.stars} change={"false"}/> </p>
+                                    <p>{review.text}</p>
+                                    {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                                 <br></br>
-                                <div className="square">
-                                    <div className="content">
-                                        <br></br>
-                                        <button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}>
-                                        </button>
-                                    </div>
-                            </div>
-                            <p> Item: {review.item} </p>
-                            <p> User: {review.user} </p>
-                            <p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>
-                            <p>Star Rating: <StarRating stars={review.stars} change={"false"}/> </p>
-                            {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-                            <p>Description: {review.text}</p>
->>>>>>> e4d9ee1861d6d65aebde7605a10ec2647296213f
-                            <br></br>
                                 </div>
                             </div>
                       )
