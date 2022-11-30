@@ -157,7 +157,7 @@ export default function Epicuria() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px"}}>Epicuria</h2>
+                    <h2 style={{display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px"}}>Epicuria</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
                     <br></br>
@@ -184,6 +184,7 @@ export default function Epicuria() {
                             </select>
                         </form>)}
                     <br></br>
+                    <hr></hr>
                     {searchOptions === true && (
 
                         <div style={{ display: "flex", justifyContent: "center" }}>
