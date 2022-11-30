@@ -1,14 +1,14 @@
 import * as React from "react";
 import Review from './Review.js';
-import {firestore, uploadImage} from "../firebase.js";
-import {where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt} from "@firebase/firestore";
+import { getDownloadURL } from "firebase/storage";
+import makeid from "./generate_name";
+import {firestore} from "../firebase.js";
+import {query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import {displayImage} from "../firebase.js"
-import {getDownloadURL} from "firebase/storage";
-
-import makeid from "./generate_name";
-
 import "../Review.css"
+import { useAuth } from "../context/Authentication.js";
+import { LoginPopup } from "./Login.js";
 
 
 export default function De_Neve() {
@@ -25,54 +25,48 @@ export default function De_Neve() {
 
     const [increment, setIncrement] = React.useState(0);
     const current_date = new Date();
-    const current_day = 30*current_date.getMonth() + current_date.getDate();
+    const current_day = 30 * current_date.getMonth() + current_date.getDate();
     const current_hour = current_date.getHours();
     let meal_period;
-    if(current_hour<10)
-    {
+    if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if(current_hour<3)
-    {
+    else if (current_hour < 3) {
         meal_period = "Lunch";
     }
-    else{
+    else {
         meal_period = "Dinner";
     }
-    const database_upvote = collection(firestore, "De_Neve/"+current_day+"/"+meal_period);
+    const database_upvote = collection(firestore, "De_Neve/" + current_day + "/" + meal_period);
     //const database = collection(firestore, "Epicuria");
 
+    //for ensuring user is logged in
+    let { currentUser } = useAuth();
+    const [pop, setPop] = React.useState(false);
 
     React.useEffect(() => {
         let database;
-        if(searchBar === "")
-        {
-            if(sortBy === '0')
-                {
-                    //Add date+meal period
-                    database = query(collection(firestore, "De_Neve"), orderBy("date","asc")); //can't do orderBy with where if different fields
-                }
-            else if(sortBy === '1')
-                {
-                    database = query(collection(firestore, "De_Neve"), orderBy("stars","desc")); //can't do orderBy with where if different fields
-                }
-            else{
-                    database = query(collection(firestore, "De_Neve"), orderBy("upvotes","desc"));
-                }
+        if (searchBar === "") {
+            if (sortBy === '0') {
+                //Add date+meal period
+                database = query(collection(firestore, "De_Neve/" + current_day + "/" + meal_period), orderBy("date", "asc")); //can't do orderBy with where if different fields
+            }
+            else if (sortBy === '1') {
+                database = query(collection(firestore, "De_Neve/" + current_day + "/" + meal_period), orderBy("stars", "desc")); //can't do orderBy with where if different fields
+            }
+            else {
+                database = query(collection(firestore, "De_Neve/" + current_day + "/" + meal_period), orderBy("upvotes", "desc"));
+            }
         }
-        else
-        {
-            if(searchBy === '0')
-            {
-                database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("item"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
+        else {
+            if (searchBy === '0') {
+                database = query(collection(firestore, "De_Neve/" + current_day + "/" + meal_period), orderBy("item"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
             }
-            else if (searchBy === '1')
-            {
-                database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("user"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
+            else if (searchBy === '1') {
+                database = query(collection(firestore, "De_Neve/" + current_day + "/" + meal_period), orderBy("user"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
             }
-            else if (searchBy === '2')
-            {
-                database = query(collection(firestore, "De_Neve/"+current_day+"/"+meal_period), orderBy("text"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
+            else if (searchBy === '2') {
+                database = query(collection(firestore, "De_Neve/" + current_day + "/" + meal_period), orderBy("text"), startAt(searchBar), endAt(searchBar + '\uf8ff')); //can't do orderBy with where if different fields
             }
 
         }
@@ -85,7 +79,7 @@ export default function De_Neve() {
                 // doc.data() is never undefined for query doc snapshots
                 //console.log(doc.id, " => ", doc.data());
             });
-            setReviews(allReviews.docs.map((doc => ({...doc.data()}))));
+            setReviews(allReviews.docs.map((doc => ({ ...doc.data() }))));
             for (const item of allReviews.docs) {
                 //console.log(item.data().image)
                 const img = await displayImage("De_Neve", item.data().image);
@@ -100,17 +94,15 @@ export default function De_Neve() {
         getReviews(database);
     }, [sortBy, increment]);
 
-    const handleSort = (type) =>(event) => {
+    const handleSort = (type) => (event) => {
 
         const { value } = event.target;
-        if(type === "sort")
-        {
+        if (type === "sort") {
 
             setsortBy(value);
             console.log(sortBy);
         }
-        else if(type === "search")
-        {
+        else if (type === "search") {
             setsearchBy(value);
             console.log(searchBy);
         }
@@ -118,19 +110,21 @@ export default function De_Neve() {
     };
 
     const handleClick = (type) => {
-        if(type === "sort")
-        {
+        if (type === "sort") {
             setsortOptions(true);
         }
-        else if(type === "search")
-        {
+        else if (type === "search") {
             setsearchOptions(true);
         }
 
     }
 
     const handleClickWrite = () => {
-        setwrite(true);
+        if (currentUser)
+            setwrite(true);
+        else {
+            setPop(true)
+        }
     }
 
     const handleChangeText = (event) => {
@@ -140,31 +134,32 @@ export default function De_Neve() {
     }
 
     const updateChange = (event) => {
-        if(event.key === 'Enter') {
-            setIncrement(increment+1);
+        if (event.key === 'Enter') {
+            setIncrement(increment + 1);
         }
 
     }
 
-    const updateUpvotes = async(key, num) => {
+    const updateUpvotes = async (key, num) => {
 
-        const result = await updateDoc(doc(database_upvote, key), {upvotes: num+1});//Add User, Dining hall, Date
-        setIncrement(increment+1);
+        const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+        setIncrement(increment + 1);
     }
 
-    return(
+    return (
         <React.Fragment>
+            <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style = {{color: 'black', display: "flex", justifyContent: "center"}}>De Neve</h2>
+                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center" }}>De Neve</h2>
 
-                    <button className="button1" onClick={()=>handleClickWrite()}>Write a Review!</button>
+                    <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
                     <br></br>
-                    { sortOptions === false && ( //if you have not clicked "sort by"
-                        <button className="button1" onClick = {()=>handleClick("sort")}>Sort By...</button>)}
-                    { sortOptions === true && ( //if you have clicked "sort by"
+                    {sortOptions === false && ( //if you have not clicked "sort by"
+                        <button className="button1" onClick={() => handleClick("sort")}>Sort By...</button>)}
+                    {sortOptions === true && ( //if you have clicked "sort by"
                         <form>
-                            <select className = "button1" id="selectSort" onChange={handleSort("sort")}>
+                            <select className="button1" id="selectSort" onChange={handleSort("sort")}>
                                 <option value='0'>Most Recent</option>
                                 <option value='1'>Highest Rating</option>
                                 <option value='2'>Upvotes</option>
@@ -172,20 +167,21 @@ export default function De_Neve() {
                         </form>
                     )}
                     <br></br>
-                    { searchOptions === false && ( //if you have not clicked "sort by"
-                        <button className="button1" onClick = {()=>handleClick("search")}>Search For...</button>)}
-                    { searchOptions === true && ( //if you have clicked "sort by"
+                    {searchOptions === false && ( //if you have not clicked "sort by"
+                        <button className="button1" onClick={() => handleClick("search")}>Search For...</button>)}
+                    {searchOptions === true && ( //if you have clicked "sort by"
                         <form>
-                            <select className = "button1" id="selectSearch" onChange={handleSort("search")}>
+                            <select className="button1" id="selectSearch" onChange={handleSort("search")}>
                                 <option value='0'>Search for Menu Item</option>
                                 <option value='1'>Search for User</option>
                                 <option value='2'>Search for Description</option>
                             </select>
                         </form>)}
                     <br></br>
-                    { searchOptions === true && (
-                        <div style={{display: "flex", justifyContent: "center"}}>
-                            <input  style= {{    textAlign: "left",
+                    {searchOptions === true && (
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <input style={{
+                                textAlign: "left",
                                 display: "block",
                                 margin: 0,
                                 borderRadius: "10px",
@@ -194,7 +190,8 @@ export default function De_Neve() {
                                 padding: "0px 20px",
                                 border: "none",
                                 resize: "none",
-                                backgroundColor: "rgb(255, 255, 255)"}} value={searchBar}  onChange={handleChangeText} onKeyUp = {updateChange}  type="text" placeholder={"Search"} />
+                                backgroundColor: "rgb(255, 255, 255)"
+                            }} value={searchBar} onChange={handleChangeText} onKeyUp={updateChange} type="text" placeholder={"Search"} />
                         </div>
                     )}
 
@@ -206,10 +203,17 @@ export default function De_Neve() {
                         return (
                             <div>
                                 <br></br>
-                                <button onClick = {()=>updateUpvotes(review.image, review.upvotes)}> Upvote</button>
+                                <div className="square">
+                                    <div className="content">
+                                        <br></br>
+                                        <button className="arrow" onClick = {()=>updateUpvotes(review.image, review.upvotes)}>
+                                        </button>
+                                    </div>
+                                </div>
                                 <p> Item: {review.item} </p>
+                                <p> User: {review.user} </p>
                                 <p>Upvotes: {review.upvotes}</p>
-                                <p>Star Rating: <StarRating stars={review.stars}/> </p>
+                                <p>Star Rating: <StarRating stars={review.stars} change={"false"} /> </p>
                                 {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                                 <p>Description: {review.text}</p>
                                 <br></br>
@@ -219,7 +223,7 @@ export default function De_Neve() {
                 </div>)}
             {write === true && (
                 <div>
-                    <Review hall="De_Neve" day={current_day} meal_period={meal_period}/>
+                    <Review hall="De_Neve" day={current_day} meal_period={meal_period} />
                 </div>
             )}
 

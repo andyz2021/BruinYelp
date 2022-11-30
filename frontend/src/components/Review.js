@@ -1,5 +1,3 @@
-import { touchRippleClasses } from "@mui/material";
-import TextField from '@mui/material/TextField';
 import "../Review.css"
 
 import StarRating from "./StarRating.js";
@@ -7,9 +5,8 @@ import "./StarRating.css";
 
 
 import * as React from "react";
-//import Button from 'react-native'
 import {firestore} from "../firebase.js";
-import {addDoc, collection, setDoc, doc} from "@firebase/firestore";
+import {collection, setDoc, doc} from "@firebase/firestore";
 import {uploadImage} from '../firebase.js';
 import makeid from './generate_name.js';
 import {useAuth} from "../context/Authentication";
@@ -28,6 +25,7 @@ export default function Review(prop) {
     });
     let currentUser = useAuth();
     const database = collection(firestore, prop.hall+"/"+prop.day+"/"+prop.meal_period);
+    const database_all = collection(firestore, "Reviews");
     React.useEffect( () => {
         // const getReviews = async () => {
         // //Should be reading from DB
@@ -95,6 +93,8 @@ export default function Review(prop) {
             const name = makeid(10);
             const image = uploadImage(reviewData.diningHall, name, reviewData.image);
             const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
+            const result_2 = await setDoc(doc(database_all, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
+
             console.log(image)
             console.log(result)
             refresh(image);
@@ -108,6 +108,13 @@ export default function Review(prop) {
     }
        
     }
+
+    const refresh = (result) => {
+        if(result){
+            window.location.reload(false);
+        }
+    }
+
 
     //Somewhere in Return statement, add a Submit button that will allow you to submit review to DB
     //Also add image and star thing
@@ -142,7 +149,7 @@ export default function Review(prop) {
                             <option value='4'>4</option>
                             <option value='5'>5</option>
                         </select> */}
-                        Star Rating <StarRating stars={reviewData.stars} handleStar={handleStar}/>
+                        Star Rating <StarRating stars={reviewData.stars} change={"true"} handleStar={handleStar}/>
                         <br/>
                     </form>
                     <button className="button0" onClick={writeDb}>Submit</button>
