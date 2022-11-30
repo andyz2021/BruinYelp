@@ -30,7 +30,6 @@ export default function Epicuria() {
     const current_day = 30 * current_date.getMonth() + current_date.getDate();
     const current_hour = current_date.getHours();
     let meal_period;
-    console.log(current_hour)
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
