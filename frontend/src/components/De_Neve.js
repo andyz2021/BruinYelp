@@ -31,7 +31,7 @@ export default function De_Neve() {
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if (current_hour < 3) {
+    else if (current_hour < 15) {
         meal_period = "Lunch";
     }
     else {
