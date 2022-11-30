@@ -82,6 +82,7 @@ export default function Dashboard(){
                     See Your Posted Reviews:
                 </h3>
                 <br></br>
+            </div>
 
 
     
