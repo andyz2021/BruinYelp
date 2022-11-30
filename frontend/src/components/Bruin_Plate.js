@@ -38,6 +38,8 @@ export default function Bruin_Plate() {
         meal_period = "Dinner";
     }
     const database_upvote = collection(firestore, "Bruin_Plate/" + current_day + "/" + meal_period);
+    const database_all_reviews = collection(firestore, "Reviews");
+
     //const database = collection(firestore, "Epicuria");
 
     //for ensuring user is logged in
@@ -145,6 +147,8 @@ export default function Bruin_Plate() {
     const updateUpvotes = async (key, num) => {
 
         const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+        const result2 = await updateDoc(doc(database_all_reviews, key), {upvotes: num+1});//Add User, Dining hall, Date
+
         setIncrement(increment + 1);
     }
     console.log(pop)
