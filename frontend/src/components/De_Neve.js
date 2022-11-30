@@ -1,7 +1,8 @@
 import * as React from "react";
 import Review from './Review.js';
 import { firestore, uploadImage } from "../firebase.js";
-import { where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt } from "@firebase/firestore";
+import { where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt, getDoc, arrayUnion } from "@firebase/firestore";
+import { increment as incrementField } from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
@@ -142,10 +143,28 @@ export default function De_Neve() {
 
     }
 
-    const updateUpvotes = async (key, num) => {
+    const updateUpvotes = async (key, num, upvotedUser) => {
 
-        const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
-        setIncrement(increment + 1);
+        if (currentUser) {
+            // making sure they don't upvote twice
+            let userDb = collection(firestore, "users");
+            let upvotedReviews = (await getDoc(doc(userDb, currentUser.uid))).data().upvotedReview
+            if (upvotedReviews.includes(key)) {
+                console.log('cannot upvote twice')
+            }
+            else {
+                const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+                setIncrement(increment + 1);
+                //updatng the user's array of previously upvoted reviews
+                await updateDoc(doc(userDb, currentUser.uid), { upvotedReview: arrayUnion(key) });
+                //updating count of upvotes for author
+                await updateDoc(doc(userDb, upvotedUser), { upvoteCount: incrementField(1) });
+
+            }
+        }
+        else {
+            setPop(true);
+        }
     }
 
     return (
@@ -205,7 +224,7 @@ export default function De_Neve() {
                         return (
                             <div>
                                 <br></br>
-                                <button onClick={() => updateUpvotes(review.image, review.upvotes)}> Upvote</button>
+                                <button onClick={() => updateUpvotes(review.image, review.upvotes, review.userUid)}> Upvote</button>
                                 <p> Item: {review.item} </p>
                                 <p>Upvotes: {review.upvotes}</p>
                                 <p>Star Rating: <StarRating stars={review.stars} /> </p>
