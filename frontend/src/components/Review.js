@@ -100,12 +100,13 @@ export default function Review(prop) {
         {
             const name = makeid(10);
             const image = uploadImage(reviewData.diningHall, name, reviewData.image);
+            const image2 = uploadImage("Reviews", name, reviewData.image);
             const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
             const result_2 = await setDoc(doc(database_all, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
 
             console.log(image)
             console.log(result)
-            refresh(image);
+            refresh(image, image2);
             // refresh(); //refreshes too early
        }
        if(reviewData.text==="" || reviewData.image===null || reviewData.stars===0 || reviewData.item ==="")
@@ -115,8 +116,8 @@ export default function Review(prop) {
        
     }
 
-    const refresh = (result) => {
-        if(result){
+    const refresh = (result,result2) => {
+        if(result&&result2){
             window.location.reload(false);
         }
     }

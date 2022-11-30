@@ -82,6 +82,7 @@ export default function Dashboard(){
                     See Your Posted Reviews:
                 </h3>
                 <br></br>
+            </div>
 
 
     
@@ -89,7 +90,8 @@ export default function Dashboard(){
         //Add button for upvotes, increment upvote count
         return (
         <div>
-            <div className="reviewdisplay">               
+            <div className="reviewdisplay">
+                <p><b>Upvotes: </b>{review.upvotes} </p>
                 <p><b>Item: </b>{review.item} </p>
                 <p><b>User: </b>{review.user} </p>
                 <p><StarRating stars={review.stars} change={"false"}/> </p>
