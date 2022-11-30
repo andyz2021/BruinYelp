@@ -2,7 +2,7 @@ import "../Review.css"
 
 import StarRating from "./StarRating.js";
 import "./StarRating.css";
-
+import Error_PopUp from "./Error_PopUp.js";
 
 import * as React from "react";
 import {firestore} from "../firebase.js";
@@ -23,6 +23,13 @@ export default function Review(prop) {
         date: new Date(),
         upvotes: 0,
     });
+    //for error popup
+    const [Error, setError] = React.useState(false);
+    
+    const togglePopup = () => {
+        setError(!Error);
+    }
+
     let currentUser = useAuth();
     const database = collection(firestore, prop.hall+"/"+prop.day+"/"+prop.meal_period);
     const database_all = collection(firestore, "Reviews");
@@ -88,6 +95,7 @@ export default function Review(prop) {
 
         //console.log(reviewData);
         console.log(currentUser.currentUser.displayName)
+
         if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0 && reviewData.item !=="")
         {
             const name = makeid(10);
@@ -99,6 +107,10 @@ export default function Review(prop) {
             console.log(result)
             refresh(image);
             // refresh(); //refreshes too early
+       }
+       if(reviewData.text==="" || reviewData.image===null || reviewData.stars===0 || reviewData.item ==="")
+       {
+        togglePopup();
        }
        
     }
@@ -129,6 +141,13 @@ export default function Review(prop) {
                     </form>
                     <button className="button0" onClick={writeDb}>Submit</button>
                     </div>
+                    
+                    {Error && <Error_PopUp
+                        content={<>
+                            <p>Please fill out all fields before submitting.</p>
+                        </>}
+                        handleClose={togglePopup}
+                    />}
                 </div>
 
     </React.Fragment>

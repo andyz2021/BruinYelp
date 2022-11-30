@@ -70,13 +70,20 @@ export default function Dashboard(){
             <div className="dashbox">
                 <h3><b>Hi {currentUser.displayName}!</b></h3>
                 {error  && <Alert variant="danger"> {error} </Alert>}
-                {/* <br></br> */}
-                <div className="text"><p>You have made {numReviews} review(s) and accumulated {numUpvotes} upvote(s). Don't be shy, keep posting!</p></div>
-            </div>
-            <br></br>
-                <h4>
-                    <b><em>See your posted reviews:</em></b>
-                </h4>
+
+                <br></br>
+
+                <p>
+                    You have made <strong>{numReviews}</strong> review(s) and received <strong>{numUpvotes}</strong> upvote(s). Don't be shy, keep posting!
+                </p>
+
+                <br></br>
+                <h3>
+                    See Your Posted Reviews:
+                </h3>
+                <br></br>
+
+
     
     {Reviews.map((review) => {
         //Add button for upvotes, increment upvote count
