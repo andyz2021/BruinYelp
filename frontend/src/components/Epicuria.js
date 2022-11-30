@@ -5,6 +5,8 @@ import makeid from "./generate_name";
 import {firestore} from "../firebase.js";
 import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
 import StarRating from './StarRating.js'
+import Vote from './Vote.js'
+
 import {displayImage} from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
@@ -213,7 +215,7 @@ export default function Epicuria() {
                             </div>
                             <p> Item: {review.item} </p>
                             <p> User: {review.user} </p>
-                            <p>Upvotes: {review.upvotes}</p>
+                            <p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>
                             <p>Star Rating: <StarRating stars={review.stars} change={"false"}/> </p>
                             {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                             <p>Description: {review.text}</p>
