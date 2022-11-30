@@ -99,14 +99,13 @@ export default function Review(prop) {
         if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0 && reviewData.item !=="")
         {
             const name = makeid(10);
-            const image = await uploadImage(reviewData.diningHall, name, reviewData.image);
-            const image2 = await uploadImage("Reviews", name, reviewData.image);
+            const image = uploadImage(reviewData.diningHall, name, reviewData.image);
             const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
             const result_2 = await setDoc(doc(database_all, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
 
             console.log(image)
             console.log(result)
-            refresh(image,image2);
+            refresh(image);
             // refresh(); //refreshes too early
        }
        if(reviewData.text==="" || reviewData.image===null || reviewData.stars===0 || reviewData.item ==="")
@@ -116,8 +115,8 @@ export default function Review(prop) {
        
     }
 
-    const refresh = (result1, result2) => {
-        if(result1&&result2){
+    const refresh = (result) => {
+        if(result){
             window.location.reload(false);
         }
     }
@@ -128,34 +127,15 @@ export default function Review(prop) {
     return(
         <React.Fragment>
         <div>
-                    {/* <button>
-                        <button onClick={()=>handleClick(1)}>Add Image</button>
-                        <br/><br/><br/>
-                        <TextField value={reviewData.text}  onChange={handleChange('text')}
-                                   label={<span>Description</span>} InputLabelProps={{shrink: true,}} />
-                        <br/><br/><br/>
-                        <button>Add star rating</button>
-                    </button>
-                    <br/>
-                    <button onClick={()=>writeDb()}>Submit</button> */}
-                    <div className="cap">
-                        <h2>Share your thoughts with fellow Bruins!</h2>
-                    </div>
+                    <h2 className = "reviewbar" style = {{display: "flex", justifyContent: "center"}}>Share your thoughts with fellow Bruins!</h2>
                     <div className="labels">
                     <form>
                         Menu Item <input type="text" id="item_input" onChange={handleChange('item')} placeholder="Which menu item are you reviewing?"/>
                         <br/>
-                        Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="We'd love to know your thoughts!"/>
+                        Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="How did your food taste?"/>
                         <br/>
                         Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChangeFile}/>
                         <br/>
-                        {/* Star Rating <select id="selectStar" onChange={handleChange('stars')}>
-                            <option value='1'>1</option>
-                            <option value='2'>2</option>
-                            <option value='3'>3</option>
-                            <option value='4'>4</option>
-                            <option value='5'>5</option>
-                        </select> */}
                         Star Rating <StarRating stars={reviewData.stars} change={"true"} handleStar={handleStar}/>
                         <br/>
                     </form>
@@ -174,3 +154,4 @@ export default function Review(prop) {
     )
 
 }
+

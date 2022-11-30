@@ -1,6 +1,7 @@
 import * as React from "react";
 import Review from './Review.js';
 import StarRating from './StarRating.js'
+import Vote from './Vote.js'
 import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
@@ -28,10 +29,11 @@ export default function Bruin_Plate() {
     const current_day = 30 * current_date.getMonth() + current_date.getDate();
     const current_hour = current_date.getHours();
     let meal_period;
+    console.log(current_hour)
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if (current_hour < 3) {
+    else if (current_hour < 15) {
         meal_period = "Lunch";
     }
     else {
@@ -157,7 +159,7 @@ export default function Bruin_Plate() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center" }}>Bruin Plate</h2>
+                    <h2 style={{display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px"}}>Bruin Plate</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
 
@@ -175,7 +177,6 @@ export default function Bruin_Plate() {
                         </form>
                     )}
                     <br></br>
-
                     {searchOptions === false && ( //if you have not clicked "sort by"
                         <button className="button1" onClick={() => handleClick("search")}>Search For...</button>)}
                     {searchOptions === true && ( //if you have clicked "sort by"
@@ -187,6 +188,7 @@ export default function Bruin_Plate() {
                             </select>
                         </form>)}
                     <br></br>
+                    <hr></hr>
                     {searchOptions === true && (
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <input style={{
@@ -211,21 +213,16 @@ export default function Bruin_Plate() {
                         //Add button for upvotes, increment upvote count
                         return (
                             <div>
+                                <div className="reviewbox">               
+                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
+                                    <b> {review.upvotes}</b>
+                                    <p><b>Item: </b>{review.item} </p>
+                                    <p><b>User: </b>{review.user} </p>
+                                    <p><StarRating stars={review.stars} change={"false"}/> </p>
+                                    <p>{review.text}</p>
+                                    {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                                 <br></br>
-                                <div className="square">
-                                    <div className="content">
-                                        <br></br>
-                                        <button className="arrow" onClick = {()=>updateUpvotes(review.image, review.upvotes)}>
-                                        </button>
-                                    </div>
                                 </div>
-                                <p> Item: {review.item} </p>
-                                <p> User: {review.user} </p>
-                                <p>Upvotes: {review.upvotes}</p>
-                                <p>Star Rating: <StarRating stars={review.stars} change={"false"} /> </p>
-                                {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-                                <p>Description: {review.text}</p>
-                                <br></br>
                             </div>
                         )
                     })}

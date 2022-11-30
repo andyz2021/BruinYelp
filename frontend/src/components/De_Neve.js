@@ -5,6 +5,7 @@ import makeid from "./generate_name";
 import {firestore} from "../firebase.js";
 import {query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
 import StarRating from './StarRating.js'
+import Vote from './Vote.js'
 import {displayImage} from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
@@ -31,7 +32,7 @@ export default function De_Neve() {
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if (current_hour < 3) {
+    else if (current_hour < 15) {
         meal_period = "Lunch";
     }
     else {
@@ -155,7 +156,7 @@ export default function De_Neve() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center" }}>De Neve</h2>
+                    <h2 style={{display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px"}}>De Neve</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
                     <br></br>
@@ -182,6 +183,7 @@ export default function De_Neve() {
                             </select>
                         </form>)}
                     <br></br>
+                    <hr></hr>                    
                     {searchOptions === true && (
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <input style={{
@@ -206,21 +208,16 @@ export default function De_Neve() {
                         //Add button for upvotes, increment upvote count
                         return (
                             <div>
+                                <div className="reviewbox">               
+                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
+                                    <b> {review.upvotes}</b>
+                                    <p><b>Item: </b>{review.item} </p>
+                                    <p><b>User: </b>{review.user} </p>
+                                    <p><StarRating stars={review.stars} change={"false"}/> </p>
+                                    <p>{review.text}</p>
+                                    {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                                 <br></br>
-                                <div className="square">
-                                    <div className="content">
-                                        <br></br>
-                                        <button className="arrow" onClick = {()=>updateUpvotes(review.image, review.upvotes)}>
-                                        </button>
-                                    </div>
                                 </div>
-                                <p> Item: {review.item} </p>
-                                <p> User: {review.user} </p>
-                                <p>Upvotes: {review.upvotes}</p>
-                                <p>Star Rating: <StarRating stars={review.stars} change={"false"} /> </p>
-                                {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-                                <p>Description: {review.text}</p>
-                                <br></br>
                             </div>
                         )
                     })}
