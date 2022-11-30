@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# BruinYelp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Andy Zhang, Nicole Ju, Julie Lam, Zinnia Kwan, and Chris Lung. 
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+BruinYelp is a web application that allows you to write and post reviews about UCLA's
+dining halls. You can see the current menu, pictures of food, 
+and what other people think of the food. 
+
+## Features
+
+1) Displaying Dynamic Data through Reviews
+2) Uploading Client data to Firebase
+3) Searching for specific reviews
+4) Logging in through Google
+5) Upvoting other Reviews
+6) Sorting by Date Posted, Star Rating, or Number of Upvotes
+
+## How to run BruinYelp
+
+### Install the code
+
+Run the following code to clone the repository and install the necessary packages.
+
+### `git clone https://github.com/andyz2021/BruinYelp.git`
+### `cd BruinYelp`
+### `npm install`
+
+Next, change directory into frontend and install the necessary packages there. 
+
+### `cd frontend`
+### `npm install`
+
+### Run the App
+
+Run the app simply by typing in the command inside the frontend directory:
 
 ### `npm start`
+
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+There is no backend setup necessary, as our app runs on Firebase. The database is already set up
+and there is no need for any further steps after setting up the frontend.

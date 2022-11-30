@@ -26,9 +26,11 @@ const analytics = getAnalytics(app);
 export const firestore = getFirestore(app);
 const storage = getStorage();
 
-export const uploadImage = (diningHall, imageName, file) => {
+
+export const uploadImage =  async (diningHall, imageName, file) => {
     const storageRef = ref(storage, `${diningHall}/${imageName}`)
-    const upload = uploadBytes(storageRef, file)
+    const upload = await uploadBytes(storageRef, file)
+    return upload
 }
 
 export const displayImage =  (diningHall, imageName) => {

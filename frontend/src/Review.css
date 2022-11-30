@@ -39,7 +39,7 @@
     border-top: 3px solid #0f203871;
     border-bottom: 3px solid #7791b300;
     background-image: -webkit-linear-gradient(#0f203871, #0000000c);
-    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(##0f203871, #0000000c);
+    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(#0f203871, #0000000c);
     background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
     background-size: 3px 100%;
     background-position: 0 0, 100% 0;
@@ -65,7 +65,7 @@
     border-top: 3px solid #0f203871;
     border-bottom: 3px solid #7791b300;
     background-image: -webkit-linear-gradient(#0f203871, #0000000c);
-    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(##0f203871, #0000000c);
+    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(#0f203871, #0000000c);
     background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
     background-size: 3px 100%;
     background-position: 0 0, 100% 0;
@@ -133,3 +133,61 @@
     color: rgb(54, 112, 179);
   }
 
+  .upvotebutton {
+    margin: 0 auto;
+    padding: 10px;
+    width: 60px;  
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
+    opacity: 0.8;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 17px;
+  }
+
+  .upvotebutton:hover {
+    background-image: linear-gradient(to left, rgba(94, 129, 206, 0.548), white);
+    border: 2px solid rgb(255, 255, 255);
+    color: rgb(54, 112, 179);
+  }
+
+  .arrow {
+    display: inline;
+    box-sizing: border-box;
+    height: 1.5vw;
+    width: 1.5vw;
+    border-style: solid;
+    border-color: rgb(106, 168, 255);
+    border-width: 0px 2px 2px 0px;
+    transform: rotate(225deg);
+    transition: border-width 150ms ease-in-out;
+  }
+
+  .arrow:hover {
+    border-bottom-width: 3px;
+    border-right-width: 3px;
+  }
+
+  .square {
+    width: 3%;
+    height: 0;
+    padding-top: 3%;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+  }
+  .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    left: 0;
+    right: 0;
+    text-align: center; 
+  }
