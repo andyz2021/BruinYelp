@@ -139,14 +139,15 @@ export default function Review(prop) {
                     </button>
                     <br/>
                     <button onClick={()=>writeDb()}>Submit</button> */}
-                    <div className="cap">
+                    {/* <div className="cap">
                         <h2>Share your thoughts with fellow Bruins!</h2>
-                    </div>
+                    </div> */}
+                    <h2 className = "reviewbar" style = {{display: "flex", justifyContent: "center"}}>Share your thoughts with fellow Bruins!</h2>
                     <div className="labels">
                     <form>
                         Menu Item <input type="text" id="item_input" onChange={handleChange('item')} placeholder="Which menu item are you reviewing?"/>
                         <br/>
-                        Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="We'd love to know your thoughts!"/>
+                        Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="How did your food taste?"/>
                         <br/>
                         Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChangeFile}/>
                         <br/>
