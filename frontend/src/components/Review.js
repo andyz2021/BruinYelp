@@ -2,6 +2,8 @@ import "../Review.css"
 
 import StarRating from "./StarRating.js";
 import "./StarRating.css";
+import Vote from "./Vote.js"
+
 
 
 import * as React from "react";
@@ -22,6 +24,7 @@ export default function Review(prop) {
         item : "",
         date: new Date(),
         upvotes: 0,
+        votes: 0,
     });
     let currentUser = useAuth();
     const database = collection(firestore, prop.hall+"/"+prop.day+"/"+prop.meal_period);
@@ -72,6 +75,16 @@ export default function Review(prop) {
         setreviewData((prev) => ({
             ...prev,
             stars: num,
+
+        }));
+       // console.log(reviewData);
+    }
+
+    const handleVote  = (num) => {
+        //console.log(num);
+        setreviewData((prev) => ({
+            ...prev,
+            votes: num,
 
         }));
        // console.log(reviewData);
