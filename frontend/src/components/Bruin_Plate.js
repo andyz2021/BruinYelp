@@ -208,14 +208,6 @@ export default function Bruin_Plate() {
                         //Add button for upvotes, increment upvote count
                         return (
                             <div>
-                                <br></br>
-                                <div className="square">
-                                    <div className="content">
-                                        <br></br>
-                                        <button className="arrow" onClick = {()=>updateUpvotes(review.image, review.upvotes)}>
-                                        </button>
-                                    </div>
-                                </div>
                                 <p> Item: {review.item} </p>
                                 <p> User: {review.user} </p>
                                 <p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>
