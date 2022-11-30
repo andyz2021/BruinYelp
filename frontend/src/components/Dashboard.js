@@ -60,7 +60,7 @@ export default function Dashboard(){
                 <br></br>
 
                 <p>
-                    You have made {numReviews} review(s) and accumulated {numUpvotes} upvote(s). Don't be shy, keep posting!
+                    You have made <strong>{numReviews}</strong> review(s) and received <strong>{numUpvotes}</strong> upvote(s). Don't be shy, keep posting!
                 </p>
 
                 <br></br>
