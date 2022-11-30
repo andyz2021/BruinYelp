@@ -159,7 +159,7 @@ export default function Bruin_Plate() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px"}}>Bruin Plate</h2>
+                    <h2 style={{display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px"}}>Bruin Plate</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
 
@@ -177,7 +177,6 @@ export default function Bruin_Plate() {
                         </form>
                     )}
                     <br></br>
-
                     {searchOptions === false && ( //if you have not clicked "sort by"
                         <button className="button1" onClick={() => handleClick("search")}>Search For...</button>)}
                     {searchOptions === true && ( //if you have clicked "sort by"
@@ -189,6 +188,7 @@ export default function Bruin_Plate() {
                             </select>
                         </form>)}
                     <br></br>
+                    <hr></hr>
                     {searchOptions === true && (
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <input style={{

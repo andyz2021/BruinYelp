@@ -6,7 +6,7 @@ import {where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, getC
 import {firestore, uploadImage} from "../firebase.js";
 import {displayImage} from "../firebase.js"
 import StarRating from './StarRating.js'
-import "../Review.css"
+import "../Dashboard.css"
 
 export default function Dashboard(){
     const {logout} =  useAuth();
@@ -67,38 +67,33 @@ export default function Dashboard(){
     return (
         //returns info on the user's name and a logout button
         <React.Fragment>
-            <div>
-                <h1>Hi {currentUser.displayName}!</h1>
+            <div className="dashbox">
+                <h3><b>Hi {currentUser.displayName}!</b></h3>
                 {error  && <Alert variant="danger"> {error} </Alert>}
-                <br></br>
-
-                <p>
-                    You have made {numReviews} review(s) and accumulated {numUpvotes} upvote(s). Don't be shy, keep posting!
-                </p>
-
-                <br></br>
-                <h3>
-                    See Your Posted Reviews:
-                </h3>
-                <br></br>
-
+                {/* <br></br> */}
+                <div className="text"><p>You have made {numReviews} review(s) and accumulated {numUpvotes} upvote(s). Don't be shy, keep posting!</p></div>
             </div>
-        
+            <br></br>
+                <h4>
+                    <b><em>See your posted reviews:</em></b>
+                </h4>
     
     {Reviews.map((review) => {
         //Add button for upvotes, increment upvote count
         return (
-            <div>
-            <p> Item: {review.item} </p>
-            <p>Upvotes: {review.upvotes}</p>
-            <p>Star Rating: <StarRating stars={review.stars} change={"false"}/> </p>
-            {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-            <p>Description: {review.text}</p>
+        <div>
+            <div className="reviewdisplay">               
+                <p><b>Item: </b>{review.item} </p>
+                <p><b>User: </b>{review.user} </p>
+                <p><StarRating stars={review.stars} change={"false"}/> </p>
+                <p>{review.text}</p>
+                {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
             <br></br>
+            </div>
         </div>
       )
     })}
-        <button className="upvotebutton" onClick={handleLogout}>Logout</button>
+        <button className="logout" onClick={handleLogout}>Logout</button>
         <br>
         </br>
         <br>

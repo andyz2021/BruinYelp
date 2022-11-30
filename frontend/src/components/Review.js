@@ -2,8 +2,6 @@ import "../Review.css"
 
 import StarRating from "./StarRating.js";
 import "./StarRating.css";
-import Vote from "./Vote.js"
-
 
 
 import * as React from "react";
@@ -24,7 +22,6 @@ export default function Review(prop) {
         item : "",
         date: new Date(),
         upvotes: 0,
-        votes: 0,
     });
     let currentUser = useAuth();
     const database = collection(firestore, prop.hall+"/"+prop.day+"/"+prop.meal_period);
@@ -80,16 +77,6 @@ export default function Review(prop) {
        // console.log(reviewData);
     }
 
-    const handleVote  = (num) => {
-        //console.log(num);
-        setreviewData((prev) => ({
-            ...prev,
-            votes: num,
-
-        }));
-       // console.log(reviewData);
-    }
-
     //Function that will write to the database. You should call this on the "Submit" Button onClick function
 
      const writeDb = async() => {
@@ -104,21 +91,20 @@ export default function Review(prop) {
         if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0 && reviewData.item !=="")
         {
             const name = makeid(10);
-            const image = await uploadImage(reviewData.diningHall, name, reviewData.image);
-            const image2 = await uploadImage("Reviews", name, reviewData.image);
+            const image = uploadImage(reviewData.diningHall, name, reviewData.image);
             const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
             const result_2 = await setDoc(doc(database_all, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
 
             console.log(image)
             console.log(result)
-            refresh(image,image2);
+            refresh(image);
             // refresh(); //refreshes too early
        }
        
     }
 
-    const refresh = (result1, result2) => {
-        if(result1&&result2){
+    const refresh = (result) => {
+        if(result){
             window.location.reload(false);
         }
     }
@@ -129,19 +115,6 @@ export default function Review(prop) {
     return(
         <React.Fragment>
         <div>
-                    {/* <button>
-                        <button onClick={()=>handleClick(1)}>Add Image</button>
-                        <br/><br/><br/>
-                        <TextField value={reviewData.text}  onChange={handleChange('text')}
-                                   label={<span>Description</span>} InputLabelProps={{shrink: true,}} />
-                        <br/><br/><br/>
-                        <button>Add star rating</button>
-                    </button>
-                    <br/>
-                    <button onClick={()=>writeDb()}>Submit</button> */}
-                    {/* <div className="cap">
-                        <h2>Share your thoughts with fellow Bruins!</h2>
-                    </div> */}
                     <h2 className = "reviewbar" style = {{display: "flex", justifyContent: "center"}}>Share your thoughts with fellow Bruins!</h2>
                     <div className="labels">
                     <form>
@@ -151,13 +124,6 @@ export default function Review(prop) {
                         <br/>
                         Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChangeFile}/>
                         <br/>
-                        {/* Star Rating <select id="selectStar" onChange={handleChange('stars')}>
-                            <option value='1'>1</option>
-                            <option value='2'>2</option>
-                            <option value='3'>3</option>
-                            <option value='4'>4</option>
-                            <option value='5'>5</option>
-                        </select> */}
                         Star Rating <StarRating stars={reviewData.stars} change={"true"} handleStar={handleStar}/>
                         <br/>
                     </form>
@@ -169,3 +135,4 @@ export default function Review(prop) {
     )
 
 }
+

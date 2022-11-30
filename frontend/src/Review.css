@@ -1,3 +1,8 @@
+h2 {
+  color: rgba(7, 18, 71, 0.5);
+  font-family: Arial;
+}
+
 /* write review, sort, search button */
 .button1 {
     display: block;
@@ -7,14 +12,17 @@
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: white;
-    -webkit-mask-image: -webkitgit-gradient(linear, left top, left bottom, 
-    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff2d);
     opacity: 0.8;
     color: rgb(0, 0, 0);
     font-weight: bold;
     font-size: 17px;
   }
+
+hr {
+  width: 85%;
+  margin: auto !important;
+}
   
   .button1:hover {
     background-image: linear-gradient(to left, rgba(94, 129, 206, 0.548), white);
@@ -24,7 +32,7 @@
 
 /* inside the form */
 .reviewbar {
-  color: rgba(36, 35, 35, 0.815);
+  color: rgba(7, 18, 71, 0.5);
   background-image: -webkit-linear-gradient(#ffffffbe, #ffffff27);
   display: flex;
   width: 80%;
@@ -40,8 +48,8 @@
     padding: 30px 50px 30px 50px;
     text-align: left;
     line-height: 3;
-    font-family: Arial;
     font-weight: bold;
+    font-family: Arial;
     font-size: 20px;
     color: rgba(0, 0, 0, 0.616);
     width: 80%;
@@ -113,7 +121,7 @@
   .reviewbox {
     background-image: -webkit-linear-gradient(#ffffff6e, #ffffff09);
     padding: 20px;
-    margin: 50px auto;
+    margin: 30px auto;
     padding: 30px;
     border-radius: 20px;
     color: rgb(0, 0, 0);
