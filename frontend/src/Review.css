@@ -1,4 +1,9 @@
-/* Write a Review button */
+h2 {
+  color: rgba(7, 18, 71, 0.5);
+  font-family: Arial;
+}
+
+/* write review, sort, search button */
 .button1 {
     display: block;
     margin: 0 auto;
@@ -7,14 +12,17 @@
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: white;
-    -webkit-mask-image: -webkitgit-gradient(linear, left top, left bottom, 
-    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff2d);
     opacity: 0.8;
     color: rgb(0, 0, 0);
     font-weight: bold;
     font-size: 17px;
   }
+
+hr {
+  width: 85%;
+  margin: auto !important;
+}
   
   .button1:hover {
     background-image: linear-gradient(to left, rgba(94, 129, 206, 0.548), white);
@@ -22,55 +30,34 @@
     color: rgb(54, 112, 179);
   }
 
-  .cap {
-    display: inline;
-    padding: 175px 60px 175px 60px;
-    text-align: center;
-    line-height: 1.5;
-    font-family: Arial;
-    color: rgba(0, 0, 0, 0.616);
-    font-weight: bold;
-    font-size: 24px;
-    width: 30%;
-    float: left;
-    margin: 20px 20px 0px 100px;
-    height: 90%;
-   /* opacity gradient border */
-    border-top: 3px solid #0f203871;
-    border-bottom: 3px solid #7791b300;
-    background-image: -webkit-linear-gradient(#0f203871, #0000000c);
-    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(#0f203871, #0000000c);
-    background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
-    background-size: 3px 100%;
-    background-position: 0 0, 100% 0;
-    background-repeat: no-repeat;
-    border-radius: 5px 5px 5px 5px;  
-  }
-
 /* inside the form */
+.reviewbar {
+  color: rgba(7, 18, 71, 0.5);
+  background-image: -webkit-linear-gradient(#ffffffbe, #ffffff27);
+  display: flex;
+  width: 80%;
+  border-radius: 10px;
+  margin: 50px auto;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .labels {
-    display: inline;
+    display: block;
     padding: 30px 50px 30px 50px;
     text-align: left;
-    line-height: 2;
-    font-family: Arial;
+    line-height: 3;
     font-weight: bold;
+    font-family: Arial;
     font-size: 20px;
     color: rgba(0, 0, 0, 0.616);
-    width: 35%;
-    float: right;
-    margin: 20px 100px 20px 0px;
+    width: 80%;
     height: 90%;
-   /* opacity gradient border */
-    border-top: 3px solid #0f203871;
-    border-bottom: 3px solid #7791b300;
-    background-image: -webkit-linear-gradient(#0f203871, #0000000c);
-    background-image: -moz-linear-gradient(#0f203849, #0000000c), -moz-linear-gradient(#0f203871, #0000000c);
-    background-image: linear-gradient(#0f203871, #0000000c), linear-gradient(#0f203871, #0000000c);
-    background-size: 3px 100%;
-    background-position: 0 0, 100% 0;
-    background-repeat: no-repeat;
-    border-radius: 5px 5px 5px 5px;
+    align-items: center;
+    margin: 50px auto;
+    background-image: -webkit-linear-gradient(#ffffff93, #ffffff17);
+    border-radius: 20px;
   }
 
 
@@ -78,10 +65,10 @@
   input[type="text"]{
     text-align: left;
     display: block;
-    margin: 0;
+    margin: 0 auto;
     border-radius: 10px;
     height: 100px; 
-    width: 92%;
+    width: 100%;
     padding: 0px 20px;
     border: none;
     resize: none;
@@ -115,38 +102,48 @@
   .button0 {
     display: block;
     margin: 10px auto;
-    width: 110px;  
-    height: 45px;
+    width: 15%;  
+    height: 5%;
     border-radius: 10px;
     border: none;
-    background-color: rgb(255, 255, 255);
     color: rgba(0, 0, 0, 0.699);
     font-weight: bold;
     font-size: 17px;
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
-    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff2d);
   }
 
   .button0:hover {
-    background-image: linear-gradient(to left, rgba(94, 129, 206, 0.548), white);
-    border: 2px solid rgb(255, 255, 255);
-    color: rgb(54, 112, 179);
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff2d);
+    border: 2px solid rgb(59, 156, 212);
+    color: rgb(49, 137, 189);
+  }
+
+  .reviewbox {
+    background-image: -webkit-linear-gradient(#ffffff6e, #ffffff09);
+    padding: 20px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 20px;
+    color: rgb(0, 0, 0);
+    width: 85%;
+    position: relative;
+    line-height: 30px;
   }
 
   .upvotebutton {
+    display: block;
     margin: 0 auto;
     padding: 10px;
-    width: 60px;  
-    height: 30px;
+    width: 100px;  
+    height: 50px;
     border-radius: 10px;
     border: none;
     background-color: white;
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
-    from(rgba(0,0,0,1)), to(rgba(0, 0, 0, 0.568)));
     opacity: 0.8;
     color: rgb(0, 0, 0);
     font-weight: bold;
     font-size: 17px;
+    display: inline;
   }
 
   .upvotebutton:hover {
@@ -157,9 +154,8 @@
 
   .arrow {
     display: inline;
-    box-sizing: border-box;
-    height: 1.5vw;
-    width: 1.5vw;
+    height: 1.1vw;
+    width: .5vw;
     border-style: solid;
     border-color: rgb(106, 168, 255);
     border-width: 0px 2px 2px 0px;
@@ -191,3 +187,51 @@
     right: 0;
     text-align: center; 
   }
+
+  /* Popup */
+.popup-box {
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    text-align: center;
+}
+ 
+.box {
+  position: relative;
+  width: 70%;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(100vh - 85vh - 20px);
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #999;
+  overflow: auto;
+}
+ 
+.close-icon {
+  content: 'x';
+  cursor: pointer;
+  background: #ededed;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #999;
+  font-size: 20px;
+  float: right;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+

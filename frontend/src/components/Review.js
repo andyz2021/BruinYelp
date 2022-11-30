@@ -1,10 +1,8 @@
-import { touchRippleClasses } from "@mui/material";
-import TextField from '@mui/material/TextField';
 import "../Review.css"
 
 import StarRating from "./StarRating.js";
 import "./StarRating.css";
-
+import Error_PopUp from "./Error_PopUp.js";
 
 import * as React from "react";
 //import Button from 'react-native'
@@ -26,6 +24,13 @@ export default function Review(prop) {
         date: new Date(),
         upvotes: 0,
     });
+    //for error popup
+    const [Error, setError] = React.useState(false);
+
+    const togglePopup = () => {
+        setError(!Error);
+    }
+
     let currentUser = useAuth();
     const database = collection(firestore, prop.hall + "/" + prop.day + "/" + prop.meal_period);
     const database_all = collection(firestore, "Reviews");
@@ -90,22 +95,28 @@ export default function Review(prop) {
         // })); //right now I think this sometimes runs after addDoc
 
         //console.log(reviewData);
+        console.log(currentUser.currentUser.displayName)
+
         if (reviewData.text !== "" && reviewData.image !== null && reviewData.stars !== 0 && reviewData.item !== "") {
             const name = makeid(10);
             const image = uploadImage(reviewData.diningHall, name, reviewData.image);
+            const image2 = uploadImage("Reviews", name, reviewData.image);
             const result = await setDoc(doc(database, name), { image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date: Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes, userUid: currentUser.currentUser.uid });//Add User, Dining hall, Date
             const result_2 = await setDoc(doc(database_all, name), { image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date: Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes, userUid: currentUser.currentUser.uid });//Add User, Dining hall, Date
 
             console.log(image)
             console.log(result)
-            refresh(image);
+            refresh(image, image2);
             // refresh(); //refreshes too early
+        }
+        if (reviewData.text === "" || reviewData.image === null || reviewData.stars === 0 || reviewData.item === "") {
+            togglePopup();
         }
 
     }
 
-    const refresh = (result) => {
-        if (result) {
+    const refresh = (result, result2) => {
+        if (result && result2) {
             window.location.reload(false);
         }
     }
@@ -116,43 +127,30 @@ export default function Review(prop) {
     return (
         <React.Fragment>
             <div>
-                {/* <button>
-                        <button onClick={()=>handleClick(1)}>Add Image</button>
-                        <br/><br/><br/>
-                        <TextField value={reviewData.text}  onChange={handleChange('text')}
-                                   label={<span>Description</span>} InputLabelProps={{shrink: true,}} />
-                        <br/><br/><br/>
-                        <button>Add star rating</button>
-                    </button>
-                    <br/>
-                    <button onClick={()=>writeDb()}>Submit</button> */}
-                <div className="cap">
-                    <h2>Share your thoughts with fellow Bruins!</h2>
-                </div>
+                <h2 className="reviewbar" style={{ display: "flex", justifyContent: "center" }}>Share your thoughts with fellow Bruins!</h2>
                 <div className="labels">
                     <form>
                         Menu Item <input type="text" id="item_input" onChange={handleChange('item')} placeholder="Which menu item are you reviewing?" />
                         <br />
-                        Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="We'd love to know your thoughts!" />
+                        Description <input type="text" id="description_input" onChange={handleChange('text')} placeholder="How did your food taste?" />
                         <br />
                         Image <input type="file" id="image_input" accept="image/png, image/jpg" onChange={handleChangeFile} />
                         <br />
-                        {/* Star Rating <select id="selectStar" onChange={handleChange('stars')}>
-                            <option value='1'>1</option>
-                            <option value='2'>2</option>
-                            <option value='3'>3</option>
-                            <option value='4'>4</option>
-                            <option value='5'>5</option>
-                        </select> */}
-                        Star Rating <StarRating stars={reviewData.stars} handleStar={handleStar} />
+                        Star Rating <StarRating stars={reviewData.stars} change={"true"} handleStar={handleStar} />
                         <br />
                     </form>
                     <button className="button0" onClick={writeDb}>Submit</button>
                 </div>
+
+                {Error && <Error_PopUp
+                    content={<>
+                        <p>Please fill out all fields before submitting.</p>
+                    </>}
+                    handleClose={togglePopup}
+                />}
             </div>
 
         </React.Fragment>
     )
 
 }
-

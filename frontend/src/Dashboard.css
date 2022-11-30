@@ -1,0 +1,55 @@
+.dashbox {
+    display: block;
+    padding: 50px 50px 30px 50px;
+    text-align: left;
+    line-height: 3;
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 20px;
+    width: 85%;
+    height: 90%;
+    align-items: center;
+    margin: 20px auto;
+    background-image: -webkit-linear-gradient(#ffffff93, #ffffff17);
+    border-radius: 20px;
+}
+
+h3 {
+    color: rgba(7, 18, 71, 0.5);
+}
+
+.text {
+    color: rgba(68, 67, 67, 0.616);
+}
+
+h4 {
+    display: block;
+    text-align: left;
+    margin: 0 0 0 150px;
+    color: rgba(7, 18, 71, 0.5);
+}
+
+.reviewdisplay {
+    background-image: -webkit-linear-gradient(#ffffff6e, #ffffff09);
+    padding: 20px;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 20px;
+    color: rgb(0, 0, 0);
+    width: 85%;
+    position: relative;
+    line-height: 30px;
+  }
+
+.logout {
+    display: block;
+    margin: 10px auto;
+    width: 10%;  
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    color: rgba(0, 0, 0, 0.699);
+    font-weight: bold;
+    font-size: 17px;
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff2d);
+}

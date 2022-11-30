@@ -1,7 +1,6 @@
 .menubar {
-    background-color: rgb(255, 255, 255);
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
-    from(rgb(255, 255, 255)), to(rgba(0, 0, 0, 0.185)));
+    color: rgba(7, 18, 71, 0.603);
+    background-image: -webkit-linear-gradient(#ffffffbe, #ffffff27);
     display: flex;
     align-items: center;
     justify-content: center;

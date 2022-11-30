@@ -4,11 +4,12 @@ import { firestore, uploadImage } from "../firebase.js";
 import { where, query, updateDoc, collection, getDocs, getDoc, orderBy, setDoc, doc, startAt, endAt, arrayUnion } from "@firebase/firestore";
 import { increment as incrementField } from "@firebase/firestore";
 import StarRating from './StarRating.js'
+import Vote from './Vote.js'
 import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
-import TextField from "@mui/material/TextField";
 import makeid from "./generate_name";
-// import { Box } from '@material-ui/core'
+import { firestore } from "../firebase.js";
+import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt } from "@firebase/firestore";
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
 import { LoginPopup } from "./Login.js";
@@ -31,16 +32,19 @@ export default function Bruin_Plate() {
     const current_day = 30 * current_date.getMonth() + current_date.getDate();
     const current_hour = current_date.getHours();
     let meal_period;
+    console.log(current_hour)
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if (current_hour < 3) {
+    else if (current_hour < 15) {
         meal_period = "Lunch";
     }
     else {
         meal_period = "Dinner";
     }
     const database_upvote = collection(firestore, "Bruin_Plate/" + current_day + "/" + meal_period);
+    const database_all_reviews = collection(firestore, "Reviews");
+
     //const database = collection(firestore, "Epicuria");
 
     //for ensuring user is logged in
@@ -157,6 +161,8 @@ export default function Bruin_Plate() {
             }
             else {
                 const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+                const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+
                 setIncrement(increment + 1);
                 //updatng the user's array of previously upvoted reviews
                 await updateDoc(doc(userDb, currentUser.uid), { upvotedReview: arrayUnion(key) });
@@ -174,7 +180,7 @@ export default function Bruin_Plate() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center" }}>Bruin Plate</h2>
+                    <h2 style={{ display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px" }}>Bruin Plate</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
 
@@ -192,7 +198,6 @@ export default function Bruin_Plate() {
                         </form>
                     )}
                     <br></br>
-
                     {searchOptions === false && ( //if you have not clicked "sort by"
                         <button className="button1" onClick={() => handleClick("search")}>Search For...</button>)}
                     {searchOptions === true && ( //if you have clicked "sort by"
@@ -204,6 +209,7 @@ export default function Bruin_Plate() {
                             </select>
                         </form>)}
                     <br></br>
+                    <hr></hr>
                     {searchOptions === true && (
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <input style={{
@@ -226,17 +232,18 @@ export default function Bruin_Plate() {
 
                     {Reviews.map((review) => {
                         //Add button for upvotes, increment upvote count
-                        //CHANGED
                         return (
                             <div>
-                                <br></br>
-                                <button onClick={() => updateUpvotes(review.image, review.upvotes, review.userUid)}> Upvote</button>
-                                <p> Item: {review.item} </p>
-                                <p>Upvotes: {review.upvotes}</p>
-                                <p>Star Rating: <StarRating stars={review.stars} /> </p>
-                                {Urls[review.image] && <img style={{ height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px" }} src={Urls[review.image]} />}
-                                <p>Description: {review.text}</p>
-                                <br></br>
+                                <div className="reviewbox">
+                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes, review.userUid)}></button>
+                                    <b> {review.upvotes}</b>
+                                    <p><b>Item: </b>{review.item} </p>
+                                    <p><b>User: </b>{review.user} </p>
+                                    <p><StarRating stars={review.stars} change={"false"} /> </p>
+                                    <p>{review.text}</p>
+                                    {Urls[review.image] && <img style={{ height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px" }} src={Urls[review.image]} />}
+                                    <br></br>
+                                </div>
                             </div>
                         )
                     })}
