@@ -2,6 +2,8 @@ import "../Review.css"
 
 import StarRating from "./StarRating.js";
 import "./StarRating.css";
+import Vote from "./Vote.js"
+
 
 
 import * as React from "react";
@@ -22,6 +24,7 @@ export default function Review(prop) {
         item : "",
         date: new Date(),
         upvotes: 0,
+        votes: 0,
     });
     let currentUser = useAuth();
     const database = collection(firestore, prop.hall+"/"+prop.day+"/"+prop.meal_period);
@@ -77,6 +80,16 @@ export default function Review(prop) {
        // console.log(reviewData);
     }
 
+    const handleVote  = (num) => {
+        //console.log(num);
+        setreviewData((prev) => ({
+            ...prev,
+            votes: num,
+
+        }));
+       // console.log(reviewData);
+    }
+
     //Function that will write to the database. You should call this on the "Submit" Button onClick function
 
      const writeDb = async() => {
@@ -91,20 +104,21 @@ export default function Review(prop) {
         if(reviewData.text!=="" && reviewData.image!==null && reviewData.stars!==0 && reviewData.item !=="")
         {
             const name = makeid(10);
-            const image = uploadImage(reviewData.diningHall, name, reviewData.image);
+            const image = await uploadImage(reviewData.diningHall, name, reviewData.image);
+            const image2 = await uploadImage("Reviews", name, reviewData.image);
             const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
             const result_2 = await setDoc(doc(database_all, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
 
             console.log(image)
             console.log(result)
-            refresh(image);
+            refresh(image,image2);
             // refresh(); //refreshes too early
        }
        
     }
 
-    const refresh = (result) => {
-        if(result){
+    const refresh = (result1, result2) => {
+        if(result1&&result2){
             window.location.reload(false);
         }
     }
@@ -155,4 +169,3 @@ export default function Review(prop) {
     )
 
 }
-

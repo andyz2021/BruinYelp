@@ -5,6 +5,8 @@ import makeid from "./generate_name";
 import {firestore} from "../firebase.js";
 import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
 import StarRating from './StarRating.js'
+import Vote from './Vote.js'
+
 import {displayImage} from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
@@ -28,16 +30,18 @@ export default function Epicuria() {
     const current_day = 30 * current_date.getMonth() + current_date.getDate();
     const current_hour = current_date.getHours();
     let meal_period;
+    console.log(current_hour)
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if (current_hour < 3) {
+    else if (current_hour < 15) {
         meal_period = "Lunch";
     }
     else {
         meal_period = "Dinner";
     }
-    const database_upvote = collection(firestore, "Epicuria/" + current_day + "/" + meal_period);
+    const database_upvote = collection(firestore, "Epicuria/"+current_day+"/"+meal_period);
+    const database_all_reviews = collection(firestore, "Reviews");
     //const database = collection(firestore, "Epicuria");
 
     //for ensuring user is logged in
@@ -142,8 +146,10 @@ export default function Epicuria() {
 
     const updateUpvotes = async (key, num) => {
 
-        const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
-        setIncrement(increment + 1);
+        const result = await updateDoc(doc(database_upvote, key), {upvotes: num+1});//Add User, Dining hall, Date
+        const result2 = await updateDoc(doc(database_all_reviews, key), {upvotes: num+1});//Add User, Dining hall, Date
+
+        setIncrement(increment+1);
     }
 
     return (
@@ -203,6 +209,7 @@ export default function Epicuria() {
                         //Add button for upvotes, increment upvote count
                         return (   
                             <div>
+<<<<<<< HEAD
                                 <div className="reviewbox">               
                                 <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
                                 <b> {review.upvotes}</b>
@@ -211,6 +218,22 @@ export default function Epicuria() {
                                 <p><StarRating stars={review.stars} change={"false"}/> </p>
                                 <p>{review.text}</p>
                                 {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
+=======
+                                <br></br>
+                                <div className="square">
+                                    <div className="content">
+                                        <br></br>
+                                        <button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}>
+                                        </button>
+                                    </div>
+                            </div>
+                            <p> Item: {review.item} </p>
+                            <p> User: {review.user} </p>
+                            <p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>
+                            <p>Star Rating: <StarRating stars={review.stars} change={"false"}/> </p>
+                            {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
+                            <p>Description: {review.text}</p>
+>>>>>>> e4d9ee1861d6d65aebde7605a10ec2647296213f
                             <br></br>
                                 </div>
                             </div>

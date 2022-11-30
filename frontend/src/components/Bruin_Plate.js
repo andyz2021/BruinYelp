@@ -1,6 +1,7 @@
 import * as React from "react";
 import Review from './Review.js';
 import StarRating from './StarRating.js'
+import Vote from './Vote.js'
 import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
@@ -28,16 +29,19 @@ export default function Bruin_Plate() {
     const current_day = 30 * current_date.getMonth() + current_date.getDate();
     const current_hour = current_date.getHours();
     let meal_period;
+    console.log(current_hour)
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if (current_hour < 3) {
+    else if (current_hour < 15) {
         meal_period = "Lunch";
     }
     else {
         meal_period = "Dinner";
     }
     const database_upvote = collection(firestore, "Bruin_Plate/" + current_day + "/" + meal_period);
+    const database_all_reviews = collection(firestore, "Reviews");
+
     //const database = collection(firestore, "Epicuria");
 
     //for ensuring user is logged in
@@ -145,6 +149,8 @@ export default function Bruin_Plate() {
     const updateUpvotes = async (key, num) => {
 
         const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+        const result2 = await updateDoc(doc(database_all_reviews, key), {upvotes: num+1});//Add User, Dining hall, Date
+
         setIncrement(increment + 1);
     }
     console.log(pop)
@@ -217,7 +223,7 @@ export default function Bruin_Plate() {
                                 </div>
                                 <p> Item: {review.item} </p>
                                 <p> User: {review.user} </p>
-                                <p>Upvotes: {review.upvotes}</p>
+                                <p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>
                                 <p>Star Rating: <StarRating stars={review.stars} change={"false"} /> </p>
                                 {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                                 <p>Description: {review.text}</p>

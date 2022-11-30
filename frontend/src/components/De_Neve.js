@@ -5,6 +5,7 @@ import makeid from "./generate_name";
 import {firestore} from "../firebase.js";
 import {query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
 import StarRating from './StarRating.js'
+import Vote from './Vote.js'
 import {displayImage} from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
@@ -31,13 +32,15 @@ export default function De_Neve() {
     if (current_hour < 10) {
         meal_period = "Breakfast";
     }
-    else if (current_hour < 3) {
+    else if (current_hour < 15) {
         meal_period = "Lunch";
     }
     else {
         meal_period = "Dinner";
     }
     const database_upvote = collection(firestore, "De_Neve/" + current_day + "/" + meal_period);
+    const database_all_reviews = collection(firestore, "Reviews");
+
     //const database = collection(firestore, "Epicuria");
 
     //for ensuring user is logged in
@@ -143,6 +146,8 @@ export default function De_Neve() {
     const updateUpvotes = async (key, num) => {
 
         const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+        const result2 = await updateDoc(doc(database_all_reviews, key), {upvotes: num+1});//Add User, Dining hall, Date
+
         setIncrement(increment + 1);
     }
 
@@ -212,7 +217,8 @@ export default function De_Neve() {
                                 </div>
                                 <p> Item: {review.item} </p>
                                 <p> User: {review.user} </p>
-                                <p>Upvotes: {review.upvotes}</p>
+                                {/* <p>Upvotes: {review.upvotes}</p> */}
+                                <p>Upvotes: <Vote handleVote upvotes ={review.upvotes}/></p>
                                 <p>Star Rating: <StarRating stars={review.stars} change={"false"} /> </p>
                                 {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                                 <p>Description: {review.text}</p>
