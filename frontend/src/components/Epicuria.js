@@ -151,7 +151,7 @@ export default function Epicuria() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center" }}>Epicuria</h2>
+                    <h2 style={{ color: 'black', display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px"}}>Epicuria</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
                     <br></br>
@@ -201,24 +201,19 @@ export default function Epicuria() {
 
                     {Reviews.map((review) => {
                         //Add button for upvotes, increment upvote count
-                        return (
+                        return (   
                             <div>
-                                <br></br>
-                                <div className="square">
-                                    <div className="content">
-                                        <br></br>
-                                        <button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}>
-                                        </button>
-                                    </div>
-                            </div>
-                            <p> Item: {review.item} </p>
-                            <p> User: {review.user} </p>
-                            <p>Upvotes: {review.upvotes}</p>
-                            <p>Star Rating: <StarRating stars={review.stars} change={"false"}/> </p>
-                            {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-                            <p>Description: {review.text}</p>
+                                <div className="reviewbox">               
+                                <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
+                                <b> {review.upvotes}</b>
+                                <p><b>Item: </b>{review.item} </p>
+                                <p><b>User: </b>{review.user} </p>
+                                <p><StarRating stars={review.stars} change={"false"}/> </p>
+                                <p>{review.text}</p>
+                                {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
                             <br></br>
-                        </div>
+                                </div>
+                            </div>
                       )
                   })}
                </div>)}

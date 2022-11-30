@@ -5,7 +5,7 @@ function App () {
 
     return (
         <>
-            <h1 className = "title" style={{color: 'black', display: "flex", margin: "20px", justifyContent: "center", fontFamily: "Arial", fontWeight: "bold"}}>BruinYelp</h1>
+            <h1 className = "title" style={{color: 'black', display: "flex", margin: "30px", justifyContent: "center", fontFamily: "Arial", fontWeight: "bold"}}>BruinYelp</h1>
             <AuthProvider>
                 <Navigation/>
             </AuthProvider>
