@@ -3,7 +3,7 @@ import Review from './Review.js';
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
 import { firestore } from "../firebase.js";
-import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt, getDoc, arrayUnion } from "@firebase/firestore";
+import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt, getDoc, arrayUnion, arrayRemove } from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import Vote from './Vote.js'
 
@@ -147,7 +147,10 @@ export default function Epicuria() {
         if (currentUser) {
 
             if (upvoters.includes(currentUser.uid)) {
-                console.log('cannot upvote twice')
+                const result = await updateDoc(doc(database_upvote, key), { upvotes: num - 1, upvoters: arrayRemove(currentUser.uid) });//Add User, Dining hall, Date
+                const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num - 1, upvoters: arrayRemove(currentUser.uid) });//Add User, Dining hall, Date
+
+                setIncrement(increment - 1);
             }
             else {
                 const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1, upvoters: arrayUnion(currentUser.uid) });//Add User, Dining hall, Date
