@@ -8,8 +8,8 @@ import Vote from './Vote.js'
 import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
-// import { firestore } from "../firebase.js";
-// import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt } from "@firebase/firestore";
+import { firestore } from "../firebase.js";
+import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt, getDoc, arrayUnion, arrayRemove } from "@firebase/firestore";
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
 import { LoginPopup } from "./Login.js";
@@ -150,31 +150,56 @@ export default function Bruin_Plate() {
 
     }
 
-    const updateUpvotes = async (key, num, upvotedUser) => {
 
+    const updateUpvotes = async (key, num, upvoters) => {
         if (currentUser) {
-            // making sure they don't upvote twice
-            let userDb = collection(firestore, "users");
-            let upvotedReviews = (await getDoc(doc(userDb, currentUser.uid))).data().upvotedReview
-            if (upvotedReviews.includes(key)) {
-                console.log('cannot upvote twice')
+
+            if (upvoters.includes(currentUser.uid)) {
+                const result = await updateDoc(doc(database_upvote, key), { upvotes: num - 1, upvoters: arrayRemove(currentUser.uid) });//Add User, Dining hall, Date
+                const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num - 1, upvoters: arrayRemove(currentUser.uid) });//Add User, Dining hall, Date
+
+                setIncrement(increment - 1);
             }
             else {
-                const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
-                const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+                const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1, upvoters: arrayUnion(currentUser.uid) });//Add User, Dining hall, Date
+                const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num + 1, upvoters: arrayUnion(currentUser.uid) });//Add User, Dining hall, Date
 
                 setIncrement(increment + 1);
-                //updatng the user's array of previously upvoted reviews
-                await updateDoc(doc(userDb, currentUser.uid), { upvotedReview: arrayUnion(key) });
-                //updating count of upvotes for author
-                await updateDoc(doc(userDb, upvotedUser), { upvoteCount: incrementField(1) });
-
             }
         }
         else {
             setPop(true);
         }
+
     }
+
+
+    // const updateUpvotes = async (key, num, upvotedUser) => {
+
+       // if (currentUser) {
+            // making sure they don't upvote twice
+       //     let userDb = collection(firestore, "users");
+      //      let upvotedReviews = (await getDoc(doc(userDb, currentUser.uid))).data().upvotedReview
+      //      if (upvotedReviews.includes(key)) {
+      //          console.log('cannot upvote twice')
+      //      }
+     //       else {
+      //          const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+     //           const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+
+     //           setIncrement(increment + 1);
+                //updatng the user's array of previously upvoted reviews
+     //           await updateDoc(doc(userDb, currentUser.uid), { upvotedReview: arrayUnion(key) });
+                //updating count of upvotes for author
+     //           await updateDoc(doc(userDb, upvotedUser), { upvoteCount: incrementField(1) });
+
+    //        }
+    //    }
+    //    else {
+    //        setPop(true);
+    //    }
+    //}
+
     return (
         <React.Fragment>
             <LoginPopup trigger={pop} setTrigger={setPop} />
@@ -235,7 +260,7 @@ export default function Bruin_Plate() {
                         return (
                             <div>
                                 <div className="reviewbox">
-                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes, review.userUid)}></button>
+                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes, review.upvoters)}></button>
                                     <b> {review.upvotes}</b>
                                     <p><b>Item: </b>{review.item} </p>
                                     <p><b>User: </b>{review.user} </p>
