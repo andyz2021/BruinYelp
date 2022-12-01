@@ -50,7 +50,7 @@ export function LoginPopup(props) {
                 </button>
                 <React.Fragment>
                     {error && <Alert variant="danger"> {error} </Alert>}
-                    <GoogleButton onClick={handleGoogleSignIn} style={{ color: "#FFFFFF", }}>Login</GoogleButton>
+                    <GoogleButton className="signin" onClick={handleGoogleSignIn}>Login</GoogleButton>
                 </React.Fragment>
             </div>
         </div>)
