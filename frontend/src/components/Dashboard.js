@@ -50,7 +50,7 @@ export default function Dashboard(){
 
         };
 
-            getReviews(database);
+        getReviews(database);
 
     }, [currentUser]);
 
@@ -59,9 +59,9 @@ export default function Dashboard(){
         try{
             await logout();
             navigate ("/");
-         } catch(err)    {
-             setError(err.message)
-         }
+        } catch(err)    {
+            setError(err.message)
+        }
     }
 
     return (
@@ -85,30 +85,30 @@ export default function Dashboard(){
             </div>
 
 
-    
-    {Reviews.map((review) => {
-        //Add button for upvotes, increment upvote count
-        return (
-        <div>
-            <div className="reviewdisplay">
-                <p><b>Upvotes: </b>{review.upvotes} </p>
-                <p><b>Item: </b>{review.item} </p>
-                <p><b>User: </b>{review.user} </p>
-                <p><StarRating stars={review.stars} change={"false"}/> </p>
-                <p>{review.text}</p>
-                {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-            <br></br>
-            </div>
-        </div>
-      )
-    })}
-        <button className="logout" onClick={handleLogout}>Logout</button>
-        <br>
-        </br>
-        <br>
-        </br>
-    
 
-</React.Fragment>
+            {Reviews.map((review) => {
+                //Add button for upvotes, increment upvote count
+                return (
+                    <div>
+                        <div className="reviewdisplay">
+                            <p><b>Upvotes: </b>{review.upvotes} </p>
+                            <p><b>Item: </b>{review.item} </p>
+                            <p><b>User: </b>{review.user} </p>
+                            <p><StarRating stars={review.stars} change={"false"}/> </p>
+                            <p>{review.text}</p>
+                            {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
+                            <br></br>
+                        </div>
+                    </div>
+                )
+            })}
+            <button className="logout" onClick={handleLogout}>Logout</button>
+            <br>
+            </br>
+            <br>
+            </br>
+
+
+        </React.Fragment>
     )
 }

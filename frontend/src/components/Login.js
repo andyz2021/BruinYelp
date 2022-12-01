@@ -20,21 +20,25 @@ export function LoginPopup(props) {
     // const navigate = useNavigate();
     const { signInWithGoogle } = useAuth()
     const [error, setError] = React.useState("")
-    // let { currentUser } = useAuth();
+    let { currentUser } = useAuth();
+
+
 
     const handleGoogleSignIn = async (e) => {
         e.preventDefault();
         try {
             await signInWithGoogle();
             props.setTrigger(false)
+            // writeDb();
             // navigate("/");
             //automatic navigate to home
         } catch (err) {
             setError(err.message)
         }
+        // console.log('current user:', currentUser)
         //calls the signin function, but will throw an error if an error during login
     }
-    // console.log(currentUser)
+
 
 
     return (props.trigger) ?
@@ -53,5 +57,7 @@ export function LoginPopup(props) {
         : "";
 
 }
+
+
 
 export default LoginPopup

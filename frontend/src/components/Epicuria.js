@@ -225,7 +225,7 @@ export default function Epicuria() {
                             <div>
                                 <div className="reviewbox">
                                     <b></b><button className="arrow" style={{ borderColor: (currentUser && review.upvoters.includes(currentUser.uid)) ? 'purple' : 'blue' }}
-                                        onClick={() => updateUpvotes(review.image, review.upvotes, review.upvoters)}></button>
+                                                   onClick={() => updateUpvotes(review.image, review.upvotes, review.upvoters)}></button>
                                     <b> {review.upvotes}</b>
                                     <p><b>Item: </b>{review.item} </p>
                                     <p><b>User: </b>{review.user} </p>
