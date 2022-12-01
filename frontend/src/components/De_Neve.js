@@ -1,17 +1,12 @@
 import * as React from "react";
 import Review from './Review.js';
-import { firestore, uploadImage } from "../firebase.js";
-import { where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt, getDoc, arrayUnion } from "@firebase/firestore";
-import { increment as incrementField } from "@firebase/firestore";
-import StarRating from './StarRating.js'
-import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
-// import { firestore } from "../firebase.js";
-// import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt } from "@firebase/firestore";
-// import StarRating from './StarRating.js'
+import {firestore} from "../firebase.js";
+import {query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
+import StarRating from './StarRating.js'
 import Vote from './Vote.js'
-// import { displayImage } from "../firebase.js"
+import {displayImage} from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
 import { LoginPopup } from "./Login.js";
@@ -148,30 +143,12 @@ export default function De_Neve() {
 
     }
 
-    const updateUpvotes = async (key, num, upvotedUser) => {
+    const updateUpvotes = async (key, num) => {
 
-        if (currentUser) {
-            // making sure they don't upvote twice
-            let userDb = collection(firestore, "users");
-            let upvotedReviews = (await getDoc(doc(userDb, currentUser.uid))).data().upvotedReview
-            if (upvotedReviews.includes(key)) {
-                console.log('cannot upvote twice')
-            }
-            else {
-                const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
-                const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+        const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+        const result2 = await updateDoc(doc(database_all_reviews, key), {upvotes: num+1});//Add User, Dining hall, Date
 
-                setIncrement(increment + 1);
-                //updatng the user's array of previously upvoted reviews
-                await updateDoc(doc(userDb, currentUser.uid), { upvotedReview: arrayUnion(key) });
-                //updating count of upvotes for author
-                await updateDoc(doc(userDb, upvotedUser), { upvoteCount: incrementField(1) });
-
-            }
-        }
-        else {
-            setPop(true);
-        }
+        setIncrement(increment + 1);
     }
 
     return (
@@ -179,7 +156,7 @@ export default function De_Neve() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{ display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px" }}>De Neve</h2>
+                    <h2 style={{display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px"}}>De Neve</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
                     <br></br>
@@ -206,7 +183,7 @@ export default function De_Neve() {
                             </select>
                         </form>)}
                     <br></br>
-                    <hr></hr>
+                    <hr></hr>                    
                     {searchOptions === true && (
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <input style={{
@@ -231,15 +208,15 @@ export default function De_Neve() {
                         //Add button for upvotes, increment upvote count
                         return (
                             <div>
-                                <div className="reviewbox">
-                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes, review.userUid)}></button>
+                                <div className="reviewbox">               
+                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
                                     <b> {review.upvotes}</b>
                                     <p><b>Item: </b>{review.item} </p>
                                     <p><b>User: </b>{review.user} </p>
-                                    <p><StarRating stars={review.stars} change={"false"} /> </p>
+                                    <p><StarRating stars={review.stars} change={"false"}/> </p>
                                     <p>{review.text}</p>
-                                    {Urls[review.image] && <img style={{ height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px" }} src={Urls[review.image]} />}
-                                    <br></br>
+                                    {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
+                                <br></br>
                                 </div>
                             </div>
                         )
