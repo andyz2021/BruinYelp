@@ -1,7 +1,13 @@
 import * as React from "react";
 import Review from './Review.js';
+import { firestore, uploadImage } from "../firebase.js";
+import { where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt, getDoc, arrayUnion } from "@firebase/firestore";
+import { increment as incrementField } from "@firebase/firestore";
+import StarRating from './StarRating.js'
+import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
+
 import { firestore } from "../firebase.js";
 import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt, getDoc, arrayUnion, arrayRemove } from "@firebase/firestore";
 import StarRating from './StarRating.js'

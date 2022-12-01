@@ -1,5 +1,10 @@
 import * as React from "react";
 import Review from './Review.js';
+import { firestore, uploadImage } from "../firebase.js";
+import { where, query, updateDoc, collection, getDocs, orderBy, setDoc, doc, startAt, endAt, getDoc, arrayUnion } from "@firebase/firestore";
+import { increment as incrementField } from "@firebase/firestore";
+import StarRating from './StarRating.js'
+import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
 import { firestore } from "../firebase.js";
@@ -143,6 +148,7 @@ export default function Epicuria() {
 
     }
 
+
     const updateUpvotes = async (key, num, upvoters) => {
         if (currentUser) {
 
@@ -162,6 +168,7 @@ export default function Epicuria() {
         else {
             setPop(true);
         }
+
 
     }
 
@@ -224,6 +231,7 @@ export default function Epicuria() {
                         return (
                             <div>
                                 <div className="reviewbox">
+
                                     <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes, review.upvoters)}></button>
                                     <b> {review.upvotes}</b>
                                     <p><b>Item: </b>{review.item} </p>

@@ -1,5 +1,8 @@
 import * as React from "react";
 import Review from './Review.js';
+import { firestore, uploadImage } from "../firebase.js";
+import { where, query, updateDoc, collection, getDocs, getDoc, orderBy, setDoc, doc, startAt, endAt, arrayUnion } from "@firebase/firestore";
+import { increment as incrementField } from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import Vote from './Vote.js'
 import { displayImage } from "../firebase.js"
@@ -47,6 +50,7 @@ export default function Bruin_Plate() {
     //for ensuring user is logged in
     let { currentUser } = useAuth();
     const [pop, setPop] = React.useState(false);
+    // console.log(currentUser)
 
     React.useEffect(() => {
         let database;
@@ -128,7 +132,7 @@ export default function Bruin_Plate() {
         if (currentUser)
             setwrite(true);
         else {
-            setPop(true)
+            setPop(true);
         }
 
     }
@@ -145,6 +149,7 @@ export default function Bruin_Plate() {
         }
 
     }
+
 
     const updateUpvotes = async (key, num, upvoters) => {
         if (currentUser) {
@@ -167,6 +172,33 @@ export default function Bruin_Plate() {
         }
 
     }
+
+
+    // const updateUpvotes = async (key, num, upvotedUser) => {
+
+       // if (currentUser) {
+            // making sure they don't upvote twice
+       //     let userDb = collection(firestore, "users");
+      //      let upvotedReviews = (await getDoc(doc(userDb, currentUser.uid))).data().upvotedReview
+      //      if (upvotedReviews.includes(key)) {
+      //          console.log('cannot upvote twice')
+      //      }
+     //       else {
+      //          const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+     //           const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num + 1 });//Add User, Dining hall, Date
+
+     //           setIncrement(increment + 1);
+                //updatng the user's array of previously upvoted reviews
+     //           await updateDoc(doc(userDb, currentUser.uid), { upvotedReview: arrayUnion(key) });
+                //updating count of upvotes for author
+     //           await updateDoc(doc(userDb, upvotedUser), { upvoteCount: incrementField(1) });
+
+    //        }
+    //    }
+    //    else {
+    //        setPop(true);
+    //    }
+    //}
 
     return (
         <React.Fragment>
