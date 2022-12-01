@@ -99,10 +99,17 @@ export default function Review(prop) {
 
         if (reviewData.text !== "" && reviewData.image !== null && reviewData.stars !== 0 && reviewData.item !== "") {
             const name = makeid(10);
+<<<<<<< HEAD
             const image = uploadImage(reviewData.diningHall, name, reviewData.image);
             const image2 = uploadImage("Reviews", name, reviewData.image);
             const result = await setDoc(doc(database, name), { image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date: Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes, userUid: currentUser.currentUser.uid });//Add User, Dining hall, Date
             const result_2 = await setDoc(doc(database_all, name), { image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date: Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes, userUid: currentUser.currentUser.uid });//Add User, Dining hall, Date
+=======
+            const image = await uploadImage(reviewData.diningHall, name, reviewData.image);
+            const image2 = await uploadImage("Reviews", name, reviewData.image);
+            const result = await setDoc(doc(database, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
+            const result_2 = await setDoc(doc(database_all, name), {image: name, stars: reviewData.stars, text: reviewData.text, diningHall: reviewData.diningHall, date : Date(), item: reviewData.item, user: currentUser.currentUser.displayName, upvotes: reviewData.upvotes});//Add User, Dining hall, Date
+>>>>>>> 08b18b3870f146c0a5736f8483b89a4f278431db
 
             console.log(image)
             console.log(result)
