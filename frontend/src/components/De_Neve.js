@@ -7,11 +7,11 @@ import StarRating from './StarRating.js'
 import { displayImage } from "../firebase.js"
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
-import { firestore } from "../firebase.js";
-import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt } from "@firebase/firestore";
-import StarRating from './StarRating.js'
+// import { firestore } from "../firebase.js";
+// import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt } from "@firebase/firestore";
+// import StarRating from './StarRating.js'
 import Vote from './Vote.js'
-import { displayImage } from "../firebase.js"
+// import { displayImage } from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
 import { LoginPopup } from "./Login.js";
