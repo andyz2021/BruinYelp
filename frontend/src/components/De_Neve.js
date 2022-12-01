@@ -2,11 +2,11 @@ import * as React from "react";
 import Review from './Review.js';
 import { getDownloadURL } from "firebase/storage";
 import makeid from "./generate_name";
-import {firestore} from "../firebase.js";
-import {query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt} from "@firebase/firestore";
+import { firestore } from "../firebase.js";
+import { query, updateDoc, collection, getDocs, orderBy, doc, startAt, endAt, getDoc, arrayUnion } from "@firebase/firestore";
 import StarRating from './StarRating.js'
 import Vote from './Vote.js'
-import {displayImage} from "../firebase.js"
+import { displayImage } from "../firebase.js"
 import "../Review.css"
 import { useAuth } from "../context/Authentication.js";
 import { LoginPopup } from "./Login.js";
@@ -143,12 +143,23 @@ export default function De_Neve() {
 
     }
 
-    const updateUpvotes = async (key, num) => {
+    const updateUpvotes = async (key, num, upvoters) => {
+        if (currentUser) {
 
-        const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1 });//Add User, Dining hall, Date
-        const result2 = await updateDoc(doc(database_all_reviews, key), {upvotes: num+1});//Add User, Dining hall, Date
+            if (upvoters.includes(currentUser.uid)) {
+                console.log('cannot upvote twice')
+            }
+            else {
+                const result = await updateDoc(doc(database_upvote, key), { upvotes: num + 1, upvoters: arrayUnion(currentUser.uid) });//Add User, Dining hall, Date
+                const result2 = await updateDoc(doc(database_all_reviews, key), { upvotes: num + 1, upvoters: arrayUnion(currentUser.uid) });//Add User, Dining hall, Date
 
-        setIncrement(increment + 1);
+                setIncrement(increment + 1);
+            }
+        }
+        else {
+            setPop(true);
+        }
+
     }
 
     return (
@@ -156,7 +167,7 @@ export default function De_Neve() {
             <LoginPopup trigger={pop} setTrigger={setPop} />
             {write === false && ( //if you have not clicked "write a review"
                 <div>
-                    <h2 style={{display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px"}}>De Neve</h2>
+                    <h2 style={{ display: "flex", justifyContent: "center", fontWeight: "bold", padding: "20px 0px", fontSize: "35px" }}>De Neve</h2>
 
                     <button className="button1" onClick={() => handleClickWrite()}>Write a Review!</button>
                     <br></br>
@@ -183,7 +194,7 @@ export default function De_Neve() {
                             </select>
                         </form>)}
                     <br></br>
-                    <hr></hr>                    
+                    <hr></hr>
                     {searchOptions === true && (
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <input style={{
@@ -208,15 +219,15 @@ export default function De_Neve() {
                         //Add button for upvotes, increment upvote count
                         return (
                             <div>
-                                <div className="reviewbox">               
-                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes)}></button>
+                                <div className="reviewbox">
+                                    <b></b><button className="arrow" onClick={() => updateUpvotes(review.image, review.upvotes, review.upvoters)}></button>
                                     <b> {review.upvotes}</b>
                                     <p><b>Item: </b>{review.item} </p>
                                     <p><b>User: </b>{review.user} </p>
-                                    <p><StarRating stars={review.stars} change={"false"}/> </p>
+                                    <p><StarRating stars={review.stars} change={"false"} /> </p>
                                     <p>{review.text}</p>
-                                    {Urls[review.image] && <img style={{height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px"}} src={Urls[review.image]}/>}
-                                <br></br>
+                                    {Urls[review.image] && <img style={{ height: "auto", width: "auto", maxWidth: "250px", maxHeight: "200px" }} src={Urls[review.image]} />}
+                                    <br></br>
                                 </div>
                             </div>
                         )
