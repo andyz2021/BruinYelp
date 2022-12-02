@@ -8,7 +8,7 @@ BruinYelp is a web application that allows you to write and post reviews about U
 dining halls. You can see the current menu, pictures of food, 
 and what other people think of the food. 
 
-###Tech Stack
+### Tech Stack
 BruinYelp was designed using React.js for frontend, and Firebase/Cloud Firestore as backend.
 
 ## Features
@@ -47,3 +47,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 There is no backend setup necessary, as our app runs on Firebase. The database is already set up
 and there is no need for any further steps after setting up the frontend.
+
