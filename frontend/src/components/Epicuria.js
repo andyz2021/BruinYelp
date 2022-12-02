@@ -52,7 +52,7 @@ export default function Epicuria() {
         if (searchBar === "") {
             if (sortBy === '0') {
                 //Add date+meal period
-                database = query(collection(firestore, "Epicuria/" + current_day + "/" + meal_period), orderBy("date", "asc")); //can't do orderBy with where if different fields
+                database = query(collection(firestore, "Epicuria/" + current_day + "/" + meal_period), orderBy("date", "desc")); //can't do orderBy with where if different fields
             }
             else if (sortBy === '1') {
                 database = query(collection(firestore, "Epicuria/" + current_day + "/" + meal_period), orderBy("stars", "desc")); //can't do orderBy with where if different fields
